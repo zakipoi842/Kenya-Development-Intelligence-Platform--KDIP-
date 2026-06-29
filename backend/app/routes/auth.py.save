@@ -1,0 +1,191 @@
+# Add this new endpoint after the get_profile function
+
+@auth_bp.route('/users', methods=['GET'])
+def get_all_users():
+    """Get all users (development only - remove in production)"""
+    try:
+        users = get_users()
+        
+        # Remove passwords before sending
+        safe_users = {}
+        for email, user in users.items():
+            safe_users[email] = {
+                'id': user['id'],
+                'firstName': user['firstName'],
+                'lastName': user['lastName'],
+                'email': user['email'],
+                'phone': user.get('phone', ''),
+                'county': user.get('county', ''),
+                'role': user.get('role', 'user'),
+                'isActive': user.get('isActive', True),
+                'createdAt': user.get('createdAt', '')
+            }
+        
+        return jsonify({
+            'total': len(safe_users),
+            'users': safe_users
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500# backend/app/routes/auth.py
+from flask import Blueprint, request, jsonify
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from datetime import datetime
+import json
+import os
+
+auth_bp = Blueprint('auth', __name__)
+
+# Simple JSON database for testing
+USERS_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'instance', 'users.json')
+
+def get_users():
+    """Get users from JSON file"""
+    if os.path.exists(USERS_FILE):
+        with open(USERS_FILE, 'r') as f:
+            return json.load(f)
+    return {}
+
+def save_users(users):
+    """Save users to JSON file"""
+    os.makedirs(os.path.dirname(USERS_FILE), exist_ok=True)
+    with open(USERS_FILE, 'w') as f:
+        json.dump(users, f, indent=2)
+
+@auth_bp.route('/register', methods=['POST'])
+def register():
+    """Register a new user"""
+    try:
+        data = request.get_json()
+        print("Registration data received:", data)
+        
+        # Validate required fields
+        required_fields = ['firstName', 'lastName', 'email', 'password']
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({'error': f'{field} is required'}), 400
+        
+        email = data['email'].lower()
+        password = data['password']
+        
+        # Get existing users
+        users = get_users()
+        
+        # Check if email already exists
+        if email in users:
+            return jsonify({'error': 'Email already registered'}), 409
+        
+        # Create new user
+        users[email] = {
+            'id': len(users) + 1,
+            'firstName': data['firstName'],
+            'lastName': data['lastName'],
+            'email': email,
+            'password': password,  # In production, hash this!
+            'phone': data.get('phone', ''),
+            'county': data.get('county', ''),
+            'role': data.get('role', 'user'),
+            'isActive': True,
+            'createdAt': datetime.now().isoformat()
+        }
+        
+        save_users(users)
+        print("User registered successfully:", email)
+        
+        return jsonify({
+            'message': 'User created successfully',
+            'user': {
+                'id': users[email]['id'],
+                'firstName': users[email]['firstName'],
+                'lastName': users[email]['lastName'],
+                'email': users[email]['email'],
+                'role': users[email]['role']
+            }
+        }), 201
+        
+    except Exception as e:
+        print("Registration error:", str(e))
+        return jsonify({'error': str(e)}), 500
+
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    """Login a user"""
+    try:
+        data = request.get_json()
+        print("Login data received:", data.get('email'))
+        
+        if not data.get('email') or not data.get('password'):
+            return jsonify({'error': 'Email and password required'}), 400
+        
+        email = data['email'].lower()
+        password = data['password']
+        
+        # Get users
+        users = get_users()
+        
+        # Check if user exists
+        if email not in users:
+            print("User not found:", email)
+            return jsonify({'error': 'Invalid credentials'}), 401
+        
+        user = users[email]
+        
+        # Check password
+        if user['password'] != password:
+            print("Invalid password for:", email)
+            return jsonify({'error': 'Invalid credentials'}), 401
+        
+        # Check if user is active
+        if not user.get('isActive', True):
+            return jsonify({'error': 'Account is deactivated'}), 403
+        
+        # Create access token
+        access_token = create_access_token(
+            identity=email,
+            additional_claims={'role': user.get('role', 'user')}
+        )
+        
+        print("User logged in:", email)
+        
+        return jsonify({
+            'access_token': access_token,
+            'user': {
+                'id': user['id'],
+                'firstName': user['firstName'],
+                'lastName': user['lastName'],
+                'email': user['email'],
+                'role': user.get('role', 'user')
+            }
+        }), 200
+        
+    except Exception as e:
+        print("Login error:", str(e))
+        return jsonify({'error': str(e)}), 500
+
+@auth_bp.route('/profile', methods=['GET'])
+@jwt_required()
+def get_profile():
+    """Get user profile"""
+    try:
+        email = get_jwt_identity()
+        users = get_users()
+        
+        if email not in users:
+            return jsonify({'error': 'User not found'}), 404
+        
+        user = users[email]
+        
+        return jsonify({
+            'user': {
+                'id': user['id'],
+                'firstName': user['firstName'],
+                'lastName': user['lastName'],
+                'email': user['email'],
+                'phone': user.get('phone', ''),
+                'county': user.get('county', ''),
+                'role': user.get('role', 'user')
+            }
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

@@ -1,6 +1,86 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+// ===== ICON COMPONENTS =====
+const IconReport = () => (
+  <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+)
+
+const IconCheck = () => (
+  <svg className="w-5 h-5 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+  </svg>
+)
+
+const IconHandshake = () => (
+  <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+  </svg>
+)
+
+const IconLightbulb = () => (
+  <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+  </svg>
+)
+
+const IconComment = () => (
+  <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+)
+
+const IconBudget = () => (
+  <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+)
+
+const IconCalendar = () => (
+  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+)
+
+const IconLocation = () => (
+  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+)
+
+const IconShield = () => (
+  <svg className="w-5 h-5 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+  </svg>
+)
+
+const IconDocument = () => (
+  <svg className="w-5 h-5 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+  </svg>
+)
+
+const IconDownload = () => (
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+  </svg>
+)
+
+const IconArrowRight = () => (
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+  </svg>
+)
+
+const IconStar = ({ filled = false }) => (
+  <svg className={`w-5 h-5 ${filled ? 'text-[#22c55e]' : 'text-gray-300'}`} fill={filled ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+  </svg>
+)
+
 // ===== MAIN PARTICIPATE PAGE =====
 export default function ParticipatePage() {
   const navigate = useNavigate()
@@ -12,18 +92,18 @@ export default function ParticipatePage() {
 
   // ===== STATISTICS DATA =====
   const stats = [
-    { label: 'Reports Submitted', value: '1,528', icon: '📋', change: '+12%' },
-    { label: 'Issues Resolved', value: '1,247', icon: '✅', change: '+8%' },
-    { label: 'Active Volunteers', value: '345', icon: '🤝', change: '+15%' },
-    { label: 'Suggestions Implemented', value: '89', icon: '💡', change: '+23%' }
+    { label: 'Reports Submitted', value: '1,528', icon: <IconReport />, change: '+12%' },
+    { label: 'Issues Resolved', value: '1,247', icon: <IconCheck />, change: '+8%' },
+    { label: 'Active Volunteers', value: '345', icon: <IconHandshake />, change: '+15%' },
+    { label: 'Suggestions Implemented', value: '89', icon: <IconLightbulb />, change: '+23%' }
   ]
 
   // ===== ACTION CARDS =====
   const actionCards = [
-    { id: 'report', title: 'Report Project Issues', description: 'Flag concerns about project quality, delays, or mismanagement.', icon: '📋' },
-    { id: 'feedback', title: 'Community Feedback', description: 'Share your experience and suggest improvements.', icon: '💬' },
-    { id: 'budget', title: 'Budget Suggestions', description: 'Propose how county budgets should be allocated.', icon: '💰' },
-    { id: 'volunteer', title: 'Volunteer for Monitoring', description: 'Join citizen monitors tracking development projects.', icon: '🤝' }
+    { id: 'report', title: 'Report Project Issues', description: 'Flag concerns about project quality, delays, or mismanagement.', icon: <IconReport /> },
+    { id: 'feedback', title: 'Community Feedback', description: 'Share your experience and suggest improvements.', icon: <IconComment /> },
+    { id: 'budget', title: 'Budget Suggestions', description: 'Propose how county budgets should be allocated.', icon: <IconBudget /> },
+    { id: 'volunteer', title: 'Volunteer for Monitoring', description: 'Join citizen monitors tracking development projects.', icon: <IconHandshake /> }
   ]
 
   // ===== HOW IT WORKS =====
@@ -198,7 +278,7 @@ export default function ParticipatePage() {
           {stats.map((stat, i) => (
             <div key={i} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:border-[#22c55e]/30 transition-all group">
               <div className="flex items-center justify-between">
-                <span className="text-2xl">{stat.icon}</span>
+                <div className="w-6 h-6">{stat.icon}</div>
                 <span className="text-xs font-medium text-[#22c55e] bg-[#22c55e]/10 px-2 py-0.5 rounded-full">{stat.change}</span>
               </div>
               <div className="text-2xl font-bold text-[#22c55e] mt-2">{stat.value}</div>
@@ -258,7 +338,7 @@ export default function ParticipatePage() {
                   onClick={() => setActiveForm(card.id)}
                   className="bg-white rounded-xl border border-gray-200 p-6 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 hover:border-[#22c55e]/30"
                 >
-                  <div className="w-12 h-12 bg-[#22c55e]/10 rounded-xl flex items-center justify-center text-2xl mb-4">{card.icon}</div>
+                  <div className="w-12 h-12 bg-[#22c55e]/10 rounded-xl flex items-center justify-center mb-4">{card.icon}</div>
                   <h3 className="text-lg font-bold text-[#0f172a] mb-2">{card.title}</h3>
                   <p className="text-sm text-gray-500">{card.description}</p>
                   <div className="mt-4 flex items-center text-[#22c55e] text-sm font-medium">Get started <span className="ml-1">→</span></div>
@@ -296,7 +376,9 @@ export default function ParticipatePage() {
               {impactStories.map((story, idx) => (
                 <div key={idx} className="bg-white rounded-xl p-5 border border-gray-200 hover:border-[#22c55e]/30 transition-all">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-5 h-5 bg-[#22c55e]/10 border border-[#22c55e]/20 rounded-full flex items-center justify-center text-xs text-[#22c55e]">✓</div>
+                    <div className="w-5 h-5 bg-[#22c55e]/10 border border-[#22c55e]/20 rounded-full flex items-center justify-center">
+                      <IconCheck />
+                    </div>
                     <span className="text-xs font-medium text-[#22c55e]">Success</span>
                     <span className="text-xs text-gray-400 ml-auto">{story.date}</span>
                   </div>
@@ -418,7 +500,7 @@ export default function ParticipatePage() {
                 <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                   <span className="text-xs text-gray-400">Updated: {resource.date}</span>
                   <button className="flex items-center gap-1 text-xs font-medium text-[#22c55e] hover:text-[#16a34a] transition-colors">
-                    Download <span className="text-base">↓</span>
+                    Download <IconDownload />
                   </button>
                 </div>
               </div>
@@ -472,16 +554,11 @@ export default function ParticipatePage() {
                 <h3 className="font-bold text-[#0f172a] mb-2">{event.title}</h3>
                 <div className="space-y-1 mb-4">
                   <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
+                    <IconCalendar />
                     <span>{event.date} at {event.time}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                    <IconLocation />
                     <span>{event.location}</span>
                   </div>
                 </div>
@@ -502,9 +579,7 @@ export default function ParticipatePage() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#22c55e]/20 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
+                  <IconShield />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-[#0f172a]">Community Engagement Target: 92%</p>
@@ -539,9 +614,7 @@ export default function ParticipatePage() {
             {registrationSuccess ? (
               <div className="p-6 text-center">
                 <div className="w-16 h-16 bg-[#22c55e]/10 border border-[#22c55e]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                  </svg>
+                  <IconCheck />
                 </div>
                 <h3 className="text-lg font-bold text-[#0f172a] mb-2">Registration Successful!</h3>
                 <p className="text-sm text-gray-500">You have been registered for {selectedEvent.title}. A confirmation email will be sent shortly.</p>
@@ -601,15 +674,15 @@ function FormPage({ formType, onBack }) {
   const getFormConfig = () => {
     switch(formType) {
       case 'report':
-        return { title: 'Report a Project Issue', subtitle: 'Flag concerns about project quality, delays, or mismanagement', icon: '📋', buttonText: 'Submit Report' }
+        return { title: 'Report a Project Issue', subtitle: 'Flag concerns about project quality, delays, or mismanagement', icon: <IconReport />, buttonText: 'Submit Report' }
       case 'feedback':
-        return { title: 'Share Community Feedback', subtitle: 'Help us improve development projects', icon: '💬', buttonText: 'Submit Feedback' }
+        return { title: 'Share Community Feedback', subtitle: 'Help us improve development projects', icon: <IconComment />, buttonText: 'Submit Feedback' }
       case 'budget':
-        return { title: 'Suggest Budget Allocation', subtitle: 'Propose how county budgets should be allocated', icon: '💰', buttonText: 'Submit Suggestion' }
+        return { title: 'Suggest Budget Allocation', subtitle: 'Propose how county budgets should be allocated', icon: <IconBudget />, buttonText: 'Submit Suggestion' }
       case 'volunteer':
-        return { title: 'Volunteer Application', subtitle: 'Join our community of citizen monitors', icon: '🤝', buttonText: 'Submit Application' }
+        return { title: 'Volunteer Application', subtitle: 'Join our community of citizen monitors', icon: <IconHandshake />, buttonText: 'Submit Application' }
       default:
-        return { title: 'Form', subtitle: '', icon: '📝', buttonText: 'Submit' }
+        return { title: 'Form', subtitle: '', icon: <IconDocument />, buttonText: 'Submit' }
     }
   }
 
@@ -629,9 +702,7 @@ function FormPage({ formType, onBack }) {
       <div className="bg-[#f8fafc] min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center max-w-md mx-auto p-8">
           <div className="w-16 h-16 bg-[#22c55e]/10 border border-[#22c55e]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-            </svg>
+            <IconCheck />
           </div>
           <h2 className="text-xl font-bold text-[#0f172a] mb-2">Submission Successful!</h2>
           <p className="text-gray-500">Thank you for your submission. The relevant authorities will review it.</p>
@@ -648,7 +719,7 @@ function FormPage({ formType, onBack }) {
         
         <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-[#22c55e]/10 rounded-xl flex items-center justify-center text-2xl">{config.icon}</div>
+            <div className="w-12 h-12 bg-[#22c55e]/10 rounded-xl flex items-center justify-center">{config.icon}</div>
             <div>
               <h1 className="text-2xl font-bold text-[#0f172a]">{config.title}</h1>
               <p className="text-sm text-gray-500">{config.subtitle}</p>
@@ -674,7 +745,7 @@ function FormPage({ formType, onBack }) {
                 <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Feedback Type *</label><select required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" value={feedbackForm.type} onChange={(e) => setFeedbackForm({...feedbackForm, type: e.target.value})}><option value="">Select type</option><option>Appreciation</option><option>Improvement Suggestion</option><option>Quality Concern</option><option>General Comment</option></select></div>
                 <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Project Title</label><input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" placeholder="Project name (optional)" value={feedbackForm.project} onChange={(e) => setFeedbackForm({...feedbackForm, project: e.target.value})} /></div>
                 <div><label className="block text-sm font-medium text-[#0f172a] mb-1">County</label><select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" value={feedbackForm.county} onChange={(e) => setFeedbackForm({...feedbackForm, county: e.target.value})}><option value="">Select county</option>{counties.map(c => <option key={c} value={c}>{c}</option>)}</select></div>
-                <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Rating</label><div className="flex gap-2">{[...Array(5)].map((_, i) => (<button key={i} type="button" onClick={() => setFeedbackForm({...feedbackForm, rating: i+1})} className="text-2xl focus:outline-none text-[#22c55e]">{i < feedbackForm.rating ? '★' : '☆'}</button>))}</div></div>
+                <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Rating</label><div className="flex gap-2">{[...Array(5)].map((_, i) => (<button key={i} type="button" onClick={() => setFeedbackForm({...feedbackForm, rating: i+1})} className="focus:outline-none">{i < feedbackForm.rating ? <IconStar filled /> : <IconStar />}</button>))}</div></div>
                 <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Your Message *</label><textarea required rows="5" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" placeholder="Share your experience or suggestions..." value={feedbackForm.comment} onChange={(e) => setFeedbackForm({...feedbackForm, comment: e.target.value})}></textarea></div>
                 <div className="flex items-center gap-2"><input type="checkbox" checked={feedbackForm.anonymous} onChange={(e) => setFeedbackForm({...feedbackForm, anonymous: e.target.checked})} className="w-4 h-4 text-[#22c55e] rounded focus:ring-[#22c55e]" /><label className="text-sm text-gray-600">Submit anonymously</label></div>
               </>
@@ -696,8 +767,8 @@ function FormPage({ formType, onBack }) {
             {formType === 'volunteer' && (
               <>
                 <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Full Name *</label><input type="text" required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" placeholder="Enter your full name" value={volunteerForm.name} onChange={(e) => setVolunteerForm({...volunteerForm, name: e.target.value})} /></div>
-                <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Email *</label><input type="email" required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" placeholder="your@email.com" value={volunteerForm.email} onChange={(e) => setVolunteerForm({...volunteerForm, email: e.target.value})} /></div>
-                <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Phone Number *</label><input type="tel" required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" placeholder="0712 345 678" value={volunteerForm.phone} onChange={(e) => setVolunteerForm({...volunteerForm, phone: e.target.value})} /></div>
+                <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Email *</label><input type="email" required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" placeholder="Enter Your Email" value={volunteerForm.email} onChange={(e) => setVolunteerForm({...volunteerForm, email: e.target.value})} /></div>
+                <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Enter Your Phone Number; *</label><input type="tel" required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" placeholder="phone number" value={volunteerForm.phone} onChange={(e) => setVolunteerForm({...volunteerForm, phone: e.target.value})} /></div>
                 <div><label className="block text-sm font-medium text-[#0f172a] mb-1">County *</label><select required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" value={volunteerForm.county} onChange={(e) => setVolunteerForm({...volunteerForm, county: e.target.value})}><option value="">Select county</option>{counties.map(c => <option key={c} value={c}>{c}</option>)}</select></div>
                 <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Skills/Expertise</label><input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" placeholder="e.g., Project management, Data collection" value={volunteerForm.skills} onChange={(e) => setVolunteerForm({...volunteerForm, skills: e.target.value})} /></div>
                 <div><label className="block text-sm font-medium text-[#0f172a] mb-1">Availability *</label><select required className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#22c55e] focus:border-[#22c55e]" value={volunteerForm.availability} onChange={(e) => setVolunteerForm({...volunteerForm, availability: e.target.value})}><option value="">Select availability</option><option>Weekdays only</option><option>Weekends only</option><option>Flexible</option><option>Evenings</option></select></div>

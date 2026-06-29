@@ -1,4 +1,33 @@
 import { useState } from 'react'
+import {
+  Building2,
+  GraduationCap,
+  Heart,
+  Sprout,
+  Droplets,
+  Home,
+  Zap,
+  Car,
+  Umbrella,
+  TrendingUp,
+  Users,
+  Briefcase,
+  MapPin,
+  Calendar,
+  CheckCircle,
+  AlertCircle,
+  ChevronDown,
+  Search,
+  ArrowRight,
+  BarChart3,
+  PieChart,
+  Activity,
+  Clock,
+  DollarSign,
+  Target,
+  Layers,
+  Globe
+} from 'lucide-react'
 
 export default function BudgetPage() {
   
@@ -37,6 +66,20 @@ export default function BudgetPage() {
 
   const years = ['2022', '2023', '2024', '2025', '2026']
 
+  // ===== SECTOR ICON MAP =====
+  const sectorIcons = {
+    'Infrastructure': Building2,
+    'Education': GraduationCap,
+    'Healthcare': Heart,
+    'Agriculture': Sprout,
+    'Water & Sanitation': Droplets,
+    'Housing': Home,
+    'Energy': Zap,
+    'Transport': Car,
+    'Tourism': Umbrella,
+    'Technology': Globe
+  }
+
   // ===== NATIONAL BUDGET SUMMARY =====
   const nationalBudget = {
     totalBudget: 'KES 3.82 Trillion',
@@ -49,15 +92,15 @@ export default function BudgetPage() {
 
   // ===== SECTOR BUDGET BREAKDOWN =====
   const sectorBudgets = [
-    { name: 'Infrastructure', budget: 'KES 892B', disbursed: 'KES 678B', utilized: 'KES 623B', percentage: 38, utilization: 70, projects: 1245, icon: '🏗️' },
-    { name: 'Education', budget: 'KES 524B', disbursed: 'KES 498B', utilized: 'KES 475B', percentage: 22, utilization: 91, projects: 3456, icon: '📚' },
-    { name: 'Healthcare', budget: 'KES 435B', disbursed: 'KES 387B', utilized: 'KES 356B', percentage: 18, utilization: 82, projects: 2341, icon: '🏥' },
-    { name: 'Agriculture', budget: 'KES 278B', disbursed: 'KES 234B', utilized: 'KES 212B', percentage: 12, utilization: 76, projects: 1876, icon: '🌾' },
-    { name: 'Water & Sanitation', budget: 'KES 245B', disbursed: 'KES 198B', utilized: 'KES 178B', percentage: 10, utilization: 73, projects: 1234, icon: '💧' },
-    { name: 'Energy', budget: 'KES 198B', disbursed: 'KES 156B', utilized: 'KES 142B', percentage: 8, utilization: 72, projects: 567, icon: '⚡' },
-    { name: 'Housing', budget: 'KES 156B', disbursed: 'KES 98B', utilized: 'KES 82B', percentage: 7, utilization: 53, projects: 234, icon: '🏠' },
-    { name: 'Transport', budget: 'KES 145B', disbursed: 'KES 112B', utilized: 'KES 98B', percentage: 6, utilization: 68, projects: 456, icon: '🚗' },
-    { name: 'Tourism', budget: 'KES 78B', disbursed: 'KES 56B', utilized: 'KES 48B', percentage: 3, utilization: 62, projects: 234, icon: '🏖️' }
+    { name: 'Infrastructure', budget: 'KES 892B', disbursed: 'KES 678B', utilized: 'KES 623B', percentage: 38, utilization: 70, projects: 1245, icon: Building2 },
+    { name: 'Education', budget: 'KES 524B', disbursed: 'KES 498B', utilized: 'KES 475B', percentage: 22, utilization: 91, projects: 3456, icon: GraduationCap },
+    { name: 'Healthcare', budget: 'KES 435B', disbursed: 'KES 387B', utilized: 'KES 356B', percentage: 18, utilization: 82, projects: 2341, icon: Heart },
+    { name: 'Agriculture', budget: 'KES 278B', disbursed: 'KES 234B', utilized: 'KES 212B', percentage: 12, utilization: 76, projects: 1876, icon: Sprout },
+    { name: 'Water & Sanitation', budget: 'KES 245B', disbursed: 'KES 198B', utilized: 'KES 178B', percentage: 10, utilization: 73, projects: 1234, icon: Droplets },
+    { name: 'Energy', budget: 'KES 198B', disbursed: 'KES 156B', utilized: 'KES 142B', percentage: 8, utilization: 72, projects: 567, icon: Zap },
+    { name: 'Housing', budget: 'KES 156B', disbursed: 'KES 98B', utilized: 'KES 82B', percentage: 7, utilization: 53, projects: 234, icon: Home },
+    { name: 'Transport', budget: 'KES 145B', disbursed: 'KES 112B', utilized: 'KES 98B', percentage: 6, utilization: 68, projects: 456, icon: Car },
+    { name: 'Tourism', budget: 'KES 78B', disbursed: 'KES 56B', utilized: 'KES 48B', percentage: 3, utilization: 62, projects: 234, icon: Umbrella }
   ]
 
   // ===== ALL 47 COUNTIES BUDGET ALLOCATIONS =====
@@ -426,7 +469,13 @@ export default function BudgetPage() {
     return matchCounty && matchSector
   })
 
-  // ===== UPDATED STATUS BADGE WITH TWO-COLOR SYSTEM =====
+  // ===== GET SECTOR ICON =====
+  const getSectorIcon = (sectorName) => {
+    const Icon = sectorIcons[sectorName]
+    return Icon ? <Icon size={20} className="text-[#22c55e]" /> : <Building2 size={20} className="text-[#22c55e]" />
+  }
+
+  // ===== UPDATED STATUS BADGE =====
   const getStatusBadge = (status) => {
     if (status === 'Completed') {
       return 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20'
@@ -484,25 +533,60 @@ export default function BudgetPage() {
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="bg-white rounded-xl p-4 border border-gray-200"><div className="text-2xl font-bold text-[#22c55e]">{nationalBudget.totalBudget}</div><div className="text-xs text-gray-500">Total Budget</div><div className="border-b border-gray-200 mt-2"></div></div>
-              <div className="bg-white rounded-xl p-4 border border-gray-200"><div className="text-2xl font-bold text-[#0f172a]">{nationalBudget.totalDisbursed}</div><div className="text-xs text-gray-500">Total Disbursed</div><div className="border-b border-gray-200 mt-2"></div></div>
-              <div className="bg-white rounded-xl p-4 border border-gray-200"><div className="text-2xl font-bold text-[#22c55e]">{nationalBudget.totalUtilized}</div><div className="text-xs text-gray-500">Total Utilized</div><div className="border-b border-gray-200 mt-2"></div></div>
-              <div className="bg-white rounded-xl p-4 border border-gray-200"><div className="text-2xl font-bold text-[#22c55e]">{nationalBudget.utilizationRate}%</div><div className="text-xs text-gray-500">Utilization Rate</div><div className="mt-2 h-1.5 bg-gray-100 rounded-full"><div className="h-1.5 bg-[#22c55e] rounded-full" style={{ width: `${nationalBudget.utilizationRate}%` }}></div></div></div>
-              <div className="bg-white rounded-xl p-4 border border-gray-200"><div className="text-xl font-bold text-[#0f172a]">{nationalBudget.remainingBudget}</div><div className="text-xs text-gray-500">Remaining Budget</div><div className="border-b border-gray-200 mt-2"></div></div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+                <div className="text-2xl font-bold text-[#22c55e]">{nationalBudget.totalBudget}</div>
+                <div className="text-xs text-gray-500">Total Budget</div>
+                <div className="border-b border-gray-200 mt-2"></div>
+              </div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+                <div className="text-2xl font-bold text-[#0f172a]">{nationalBudget.totalDisbursed}</div>
+                <div className="text-xs text-gray-500">Total Disbursed</div>
+                <div className="border-b border-gray-200 mt-2"></div>
+              </div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+                <div className="text-2xl font-bold text-[#22c55e]">{nationalBudget.totalUtilized}</div>
+                <div className="text-xs text-gray-500">Total Utilized</div>
+                <div className="border-b border-gray-200 mt-2"></div>
+              </div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+                <div className="text-2xl font-bold text-[#22c55e]">{nationalBudget.utilizationRate}%</div>
+                <div className="text-xs text-gray-500">Utilization Rate</div>
+                <div className="mt-2 h-1.5 bg-gray-100 rounded-full">
+                  <div className="h-1.5 bg-[#22c55e] rounded-full" style={{ width: `${nationalBudget.utilizationRate}%` }}></div>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+                <div className="text-xl font-bold text-[#0f172a]">{nationalBudget.remainingBudget}</div>
+                <div className="text-xs text-gray-500">Remaining Budget</div>
+                <div className="border-b border-gray-200 mt-2"></div>
+              </div>
             </div>
           </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="flex justify-between items-center mb-4"><h2 className="text-lg font-bold text-[#0f172a]">Top Sectors by Budget Allocation</h2></div>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold text-[#0f172a]">Top Sectors by Budget Allocation</h2>
+            </div>
             <div className="grid grid-cols-1 gap-4">
-              {sectorBudgets.slice(0, 5).map((sector, idx) => (
-                <div key={idx} onClick={() => { setSelectedSector(sector.name); setSelectedView('sectors'); }} className="bg-white rounded-xl p-4 border border-gray-200 cursor-pointer hover:shadow-md transition-all hover:border-[#22c55e]/30">
-                  <div className="flex justify-between items-center mb-2"><span className="font-semibold text-[#0f172a]">{sector.name}</span><span className="text-sm font-bold text-[#22c55e]">{sector.budget}</span></div>
-                  <div className="flex justify-between text-xs text-gray-500 mb-2"><span>Utilization: {sector.utilization}%</span><span>{sector.percentage}% of total budget</span></div>
-                  <div className="h-1.5 bg-gray-100 rounded-full"><div className="h-1.5 bg-[#22c55e] rounded-full" style={{ width: `${sector.percentage}%` }}></div></div>
-                  <div className="border-b border-gray-100 mt-3"></div>
-                </div>
-              ))}
+              {sectorBudgets.slice(0, 5).map((sector, idx) => {
+                const Icon = sector.icon
+                return (
+                  <div key={idx} onClick={() => { setSelectedSector(sector.name); setSelectedView('sectors'); }} className="bg-white rounded-xl p-4 border border-gray-200 cursor-pointer hover:shadow-md transition-all hover:border-[#22c55e]/30">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-semibold text-[#0f172a]">{sector.name}</span>
+                      <span className="text-sm font-bold text-[#22c55e]">{sector.budget}</span>
+                    </div>
+                    <div className="flex justify-between text-xs text-gray-500 mb-2">
+                      <span>Utilization: {sector.utilization}%</span>
+                      <span>{sector.percentage}% of total budget</span>
+                    </div>
+                    <div className="h-1.5 bg-gray-100 rounded-full">
+                      <div className="h-1.5 bg-[#22c55e] rounded-full" style={{ width: `${sector.percentage}%` }}></div>
+                    </div>
+                    <div className="border-b border-gray-100 mt-3"></div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </>
@@ -512,14 +596,48 @@ export default function BudgetPage() {
       {selectedView === 'sectors' && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {sectorBudgets.map((sector, idx) => (
-              <div key={idx} onClick={() => { setSelectedBudgetItem(sector); setIsModalOpen(true); }} className="bg-white rounded-xl p-5 border border-gray-200 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 hover:border-[#22c55e]/30">
-                <div className="flex items-center gap-3 mb-4"><div className="w-12 h-12 rounded-xl bg-[#22c55e]/10 flex items-center justify-center text-2xl">{sector.icon}</div><div><h3 className="font-bold text-[#0f172a] text-lg">{sector.name}</h3><p className="text-xs text-gray-500">{sector.projects} projects</p></div></div>
-                <div className="grid grid-cols-3 gap-2 mb-4 text-center"><div><p className="text-[10px] text-gray-400">Budget</p><p className="text-sm font-bold text-[#0f172a]">{sector.budget}</p></div><div><p className="text-[10px] text-gray-400">Disbursed</p><p className="text-sm font-semibold text-[#0f172a]">{sector.disbursed}</p></div><div><p className="text-[10px] text-gray-400">Utilized</p><p className="text-sm font-semibold text-[#22c55e]">{sector.utilized}</p></div></div>
-                <div><div className="flex justify-between text-xs mb-1"><span className="text-gray-500">Utilization Rate</span><span className="font-semibold text-[#22c55e]">{sector.utilization}%</span></div><div className="h-2 bg-gray-100 rounded-full"><div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${sector.utilization}%` }}></div></div></div>
-                <div className="border-t border-gray-100 mt-3 pt-2"><p className="text-xs text-gray-400">Click for detailed breakdown</p></div>
-              </div>
-            ))}
+            {sectorBudgets.map((sector, idx) => {
+              const Icon = sector.icon
+              return (
+                <div key={idx} onClick={() => { setSelectedBudgetItem(sector); setIsModalOpen(true); }} className="bg-white rounded-xl p-5 border border-gray-200 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 hover:border-[#22c55e]/30">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-[#22c55e]/10 flex items-center justify-center">
+                      <Icon size={24} className="text-[#22c55e]" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-[#0f172a] text-lg">{sector.name}</h3>
+                      <p className="text-xs text-gray-500">{sector.projects} projects</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 mb-4 text-center">
+                    <div>
+                      <p className="text-[10px] text-gray-400">Budget</p>
+                      <p className="text-sm font-bold text-[#0f172a]">{sector.budget}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400">Disbursed</p>
+                      <p className="text-sm font-semibold text-[#0f172a]">{sector.disbursed}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400">Utilized</p>
+                      <p className="text-sm font-semibold text-[#22c55e]">{sector.utilized}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-gray-500">Utilization Rate</span>
+                      <span className="font-semibold text-[#22c55e]">{sector.utilization}%</span>
+                    </div>
+                    <div className="h-2 bg-gray-100 rounded-full">
+                      <div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${sector.utilization}%` }}></div>
+                    </div>
+                  </div>
+                  <div className="border-t border-gray-100 mt-3 pt-2">
+                    <p className="text-xs text-gray-400">Click for detailed breakdown</p>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       )}
@@ -554,7 +672,15 @@ export default function BudgetPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-[#0f172a] border-b border-slate-800">
-                  <tr><th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">#</th><th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">County</th><th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Allocation</th><th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Disbursed</th><th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Utilized</th><th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Utilization</th><th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Projects</th></tr>
+                  <tr>
+                    <th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">#</th>
+                    <th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">County</th>
+                    <th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Allocation</th>
+                    <th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Disbursed</th>
+                    <th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Utilized</th>
+                    <th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Utilization</th>
+                    <th className="text-left px-6 py-3 text-xs font-semibold text-slate-300 uppercase">Projects</th>
+                  </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {(selectedCounty === 'all' || selectedCounty === 'All Counties' ? countyBudgets : countyBudgets.filter(c => c.name === selectedCounty)).map((county, idx) => (
@@ -564,7 +690,14 @@ export default function BudgetPage() {
                       <td className="px-6 py-3 text-sm text-gray-700">{county.allocation}</td>
                       <td className="px-6 py-3 text-sm text-[#0f172a] font-medium">{county.disbursed}</td>
                       <td className="px-6 py-3 text-sm text-[#22c55e] font-medium">{county.utilized}</td>
-                      <td className="px-6 py-3"><div className="flex items-center gap-2"><span className="text-sm font-semibold text-[#22c55e]">{county.utilization}%</span><div className="w-16 bg-gray-100 rounded-full h-1.5"><div className="bg-[#22c55e] h-1.5 rounded-full" style={{ width: `${county.utilization}%` }}></div></div></div></td>
+                      <td className="px-6 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-semibold text-[#22c55e]">{county.utilization}%</span>
+                          <div className="w-16 bg-gray-100 rounded-full h-1.5">
+                            <div className="bg-[#22c55e] h-1.5 rounded-full" style={{ width: `${county.utilization}%` }}></div>
+                          </div>
+                        </div>
+                      </td>
                       <td className="px-6 py-3 text-sm text-gray-600">{county.projects.toLocaleString()}</td>
                     </tr>
                   ))}
@@ -585,9 +718,18 @@ export default function BudgetPage() {
             <div className="relative">
               <button onClick={() => setIsCountyDropdownOpen(!isCountyDropdownOpen)} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white text-left flex justify-between items-center focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e]">
                 <span className="text-[#0f172a]">{selectedCounty === 'all' || selectedCounty === 'All Counties' ? 'All 47 Counties' : selectedCounty}</span>
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
-              {isCountyDropdownOpen && (<div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto"><button onClick={() => { setSelectedCounty('all'); setIsCountyDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 font-medium text-[#22c55e]">All 47 Counties</button>{filteredCounties.map(county => (<button key={county} onClick={() => { setSelectedCounty(county); setIsCountyDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 text-[#0f172a]">{county}</button>))}</div>)}
+              {isCountyDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                  <button onClick={() => { setSelectedCounty('all'); setIsCountyDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 font-medium text-[#22c55e]">All 47 Counties</button>
+                  {filteredCounties.map(county => (
+                    <button key={county} onClick={() => { setSelectedCounty(county); setIsCountyDropdownOpen(false); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 text-[#0f172a]">{county}</button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           
@@ -603,13 +745,36 @@ export default function BudgetPage() {
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 mb-2">{project.county} County • {project.sector}</p>
-                <div className="grid grid-cols-2 gap-3 mb-3"><div><p className="text-[10px] text-gray-400">Budget</p><p className="text-xs font-bold text-[#0f172a]">{project.budget}</p></div><div><p className="text-[10px] text-gray-400">Utilized</p><p className="text-xs font-semibold text-[#22c55e]">{project.utilized}</p></div></div>
-                <div><div className="flex justify-between text-xs mb-1"><span className="text-gray-500">Progress</span><span className="font-semibold text-[#22c55e]">{project.progress}%</span></div><div className="h-1.5 bg-gray-100 rounded-full"><div className="h-1.5 bg-[#22c55e] rounded-full" style={{ width: `${project.progress}%` }}></div></div></div>
-                <div className="border-t border-gray-100 mt-3 pt-2"><p className="text-xs text-gray-400">Click to view project details</p></div>
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <div>
+                    <p className="text-[10px] text-gray-400">Budget</p>
+                    <p className="text-xs font-bold text-[#0f172a]">{project.budget}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-400">Utilized</p>
+                    <p className="text-xs font-semibold text-[#22c55e]">{project.utilized}</p>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-gray-500">Progress</span>
+                    <span className="font-semibold text-[#22c55e]">{project.progress}%</span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full">
+                    <div className="h-1.5 bg-[#22c55e] rounded-full" style={{ width: `${project.progress}%` }}></div>
+                  </div>
+                </div>
+                <div className="border-t border-gray-100 mt-3 pt-2">
+                  <p className="text-xs text-gray-400">Click to view project details</p>
+                </div>
               </div>
             ))}
           </div>
-          {filteredProjectBudgets.length === 0 && (<div className="text-center py-12"><p className="text-gray-500">No projects found for the selected filters.</p></div>)}
+          {filteredProjectBudgets.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No projects found for the selected filters.</p>
+            </div>
+          )}
         </div>
       )}
 
@@ -622,19 +787,38 @@ export default function BudgetPage() {
               <button onClick={() => setIsProjectModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-2xl">×</button>
             </div>
             <div className="space-y-3">
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">County</span><span className="font-bold text-[#0f172a]">{selectedProject.county}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Sector</span><span className="font-bold text-[#0f172a]">{selectedProject.sector}</span></div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">County</span>
+                <span className="font-bold text-[#0f172a]">{selectedProject.county}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Sector</span>
+                <span className="font-bold text-[#0f172a]">{selectedProject.sector}</span>
+              </div>
               <div className="flex justify-between py-2 border-b border-gray-100">
                 <span className="text-gray-600">Status</span>
                 <span className={`font-bold ${selectedProject.status === 'Completed' ? 'text-[#22c55e]' : selectedProject.status === 'Ongoing' ? 'text-[#0f172a]' : 'text-red-600'}`}>
                   {selectedProject.status}
                 </span>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Budget</span><span className="font-bold text-[#0f172a]">{selectedProject.budget}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Utilized</span><span className="font-bold text-[#22c55e]">{selectedProject.utilized}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Progress</span><span className="font-bold text-[#22c55e]">{selectedProject.progress}%</span></div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Budget</span>
+                <span className="font-bold text-[#0f172a]">{selectedProject.budget}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Utilized</span>
+                <span className="font-bold text-[#22c55e]">{selectedProject.utilized}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Progress</span>
+                <span className="font-bold text-[#22c55e]">{selectedProject.progress}%</span>
+              </div>
             </div>
-            <div className="mt-4 pt-2"><div className="h-2 bg-gray-100 rounded-full"><div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${selectedProject.progress}%` }}></div></div></div>
+            <div className="mt-4 pt-2">
+              <div className="h-2 bg-gray-100 rounded-full">
+                <div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${selectedProject.progress}%` }}></div>
+              </div>
+            </div>
             <button onClick={() => setIsProjectModalOpen(false)} className="w-full mt-6 bg-[#22c55e] text-white py-2.5 rounded-lg font-semibold hover:bg-[#16a34a] transition-colors">Close</button>
           </div>
         </div>
@@ -644,16 +828,45 @@ export default function BudgetPage() {
       {isModalOpen && selectedBudgetItem && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6">
           <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
-            <div className="flex justify-between items-center mb-4"><h2 className="text-xl font-bold text-[#0f172a]">{selectedBudgetItem.name} {selectedBudgetItem.sector ? 'Sector' : 'County'} Details</h2><button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-2xl">×</button></div>
-            <div className="space-y-3">
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Total Budget</span><span className="font-bold text-[#0f172a]">{selectedBudgetItem.budget || selectedBudgetItem.allocation}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Amount Disbursed</span><span className="font-bold text-[#0f172a]">{selectedBudgetItem.disbursed}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Amount Utilized</span><span className="font-bold text-[#22c55e]">{selectedBudgetItem.utilized}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Utilization Rate</span><span className="font-bold text-[#22c55e]">{selectedBudgetItem.utilization}%</span></div>
-              {selectedBudgetItem.projects && (<div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Total Projects</span><span className="font-bold text-[#0f172a]">{selectedBudgetItem.projects.toLocaleString()}</span></div>)}
-              {selectedBudgetItem.percentage && (<div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Share of Budget</span><span className="font-bold text-[#22c55e]">{selectedBudgetItem.percentage}%</span></div>)}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-[#0f172a]">{selectedBudgetItem.name} {selectedBudgetItem.sector ? 'Sector' : 'County'} Details</h2>
+              <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-2xl">×</button>
             </div>
-            <div className="mt-4 pt-2"><div className="h-2 bg-gray-100 rounded-full"><div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${selectedBudgetItem.utilization}%` }}></div></div></div>
+            <div className="space-y-3">
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Total Budget</span>
+                <span className="font-bold text-[#0f172a]">{selectedBudgetItem.budget || selectedBudgetItem.allocation}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Amount Disbursed</span>
+                <span className="font-bold text-[#0f172a]">{selectedBudgetItem.disbursed}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Amount Utilized</span>
+                <span className="font-bold text-[#22c55e]">{selectedBudgetItem.utilized}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Utilization Rate</span>
+                <span className="font-bold text-[#22c55e]">{selectedBudgetItem.utilization}%</span>
+              </div>
+              {selectedBudgetItem.projects && (
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-gray-600">Total Projects</span>
+                  <span className="font-bold text-[#0f172a]">{selectedBudgetItem.projects.toLocaleString()}</span>
+                </div>
+              )}
+              {selectedBudgetItem.percentage && (
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-gray-600">Share of Budget</span>
+                  <span className="font-bold text-[#22c55e]">{selectedBudgetItem.percentage}%</span>
+                </div>
+              )}
+            </div>
+            <div className="mt-4 pt-2">
+              <div className="h-2 bg-gray-100 rounded-full">
+                <div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${selectedBudgetItem.utilization}%` }}></div>
+              </div>
+            </div>
             <button onClick={() => setIsModalOpen(false)} className="w-full mt-6 bg-[#22c55e] text-white py-2.5 rounded-lg font-semibold hover:bg-[#16a34a] transition-colors">Close</button>
           </div>
         </div>

@@ -1,5 +1,41 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import {
+  Search,
+  Grid,
+  List,
+  X,
+  ChevronDown,
+  MapPin,
+  Calendar,
+  DollarSign,
+  Target,
+  Users,
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  Building2,
+  GraduationCap,
+  Heart,
+  Sprout,
+  Droplets,
+  Home,
+  Zap,
+  Car,
+  Umbrella,
+  Globe,
+  FileText,
+  Flag,
+  BarChart3,
+  Activity,
+  Layers,
+  Eye,
+  Play,
+  Pause,
+  AlertTriangle,
+  TrendingUp,
+  ArrowRight
+} from 'lucide-react'
 
 export default function ProjectsPage() {
   const navigate = useNavigate()
@@ -41,6 +77,20 @@ export default function ProjectsPage() {
   ]
 
   const statuses = ['All Status', 'Ongoing', 'Completed', 'Delayed', 'Planning', 'Tendering']
+
+  // ===== SECTOR ICON MAP =====
+  const sectorIcons = {
+    'Infrastructure': Building2,
+    'Education': GraduationCap,
+    'Healthcare': Heart,
+    'Agriculture': Sprout,
+    'Water & Sanitation': Droplets,
+    'Housing': Home,
+    'Energy': Zap,
+    'Transport': Car,
+    'Tourism': Umbrella,
+    'Technology': Globe
+  }
 
   // ===== PROFESSIONAL IMAGE URLS FOR EACH PROJECT TYPE =====
   const imageUrls = {
@@ -391,6 +441,12 @@ export default function ProjectsPage() {
     totalBudget: 'KES 523.8B'
   }
 
+  // Get sector icon
+  const getSectorIcon = (sectorName) => {
+    const Icon = sectorIcons[sectorName]
+    return Icon ? <Icon size={14} className="text-[#22c55e]" /> : <Building2 size={14} className="text-[#22c55e]" />
+  }
+
   const handleReportSubmit = (e) => {
     e.preventDefault()
     alert(`Report submitted successfully!\n\nProject: ${selectedProject?.title}\nIssue: ${reportData.issue}\nDescription: ${reportData.description}\n\nThank you for your feedback. The relevant authorities will be notified.`)
@@ -405,8 +461,14 @@ export default function ProjectsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a]">Development Projects</h1>
-              <p className="text-gray-500 text-sm mt-1">
+              <div className="flex items-center gap-3 mb-1">
+                <div className="p-2 bg-[#22c55e]/10 rounded-lg border border-[#22c55e]/20">
+                  <Layers size={24} className="text-[#22c55e]" />
+                </div>
+                <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a]">Development Projects</h1>
+              </div>
+              <p className="text-gray-500 text-sm mt-1 flex items-center gap-1">
+                <Activity size={14} className="text-[#22c55e]" />
                 Tracking <span className="font-bold text-[#22c55e]">{stats.total} projects</span> across <span className="font-bold text-[#22c55e]">47 counties</span> | 
                 <span className="ml-1">{stats.completed} completed • {stats.ongoing} ongoing • {stats.delayed} delayed (2022-2026)</span>
               </p>
@@ -416,17 +478,13 @@ export default function ProjectsPage() {
                 onClick={() => setViewMode('grid')}
                 className={`p-2 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-[#22c55e]/10 text-[#22c55e]' : 'bg-gray-100 text-gray-500'}`}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
+                <Grid size={20} />
               </button>
               <button 
                 onClick={() => setViewMode('list')}
                 className={`p-2 rounded-lg transition-colors ${viewMode === 'list' ? 'bg-[#22c55e]/10 text-[#22c55e]' : 'bg-gray-100 text-gray-500'}`}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                </svg>
+                <List size={20} />
               </button>
             </div>
           </div>
@@ -436,29 +494,64 @@ export default function ProjectsPage() {
       {/* Stats Cards */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="text-2xl font-bold text-[#22c55e]">{stats.total}</div>
-            <div className="text-xs text-gray-500">Total Projects</div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="text-2xl font-bold text-[#22c55e]">{stats.total}</div>
+                <div className="text-xs text-gray-500">Total Projects</div>
+              </div>
+              <div className="p-2 bg-[#22c55e]/10 rounded-lg">
+                <Layers size={16} className="text-[#22c55e]" />
+              </div>
+            </div>
             <div className="border-b border-gray-200 mt-2"></div>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="text-2xl font-bold text-[#0f172a]">{stats.ongoing}</div>
-            <div className="text-xs text-gray-500">Ongoing</div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="text-2xl font-bold text-[#0f172a]">{stats.ongoing}</div>
+                <div className="text-xs text-gray-500">Ongoing</div>
+              </div>
+              <div className="p-2 bg-[#0f172a]/10 rounded-lg">
+                <Play size={16} className="text-[#0f172a]" />
+              </div>
+            </div>
             <div className="border-b border-gray-200 mt-2"></div>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="text-2xl font-bold text-[#22c55e]">{stats.completed}</div>
-            <div className="text-xs text-gray-500">Completed</div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="text-2xl font-bold text-[#22c55e]">{stats.completed}</div>
+                <div className="text-xs text-gray-500">Completed</div>
+              </div>
+              <div className="p-2 bg-[#22c55e]/10 rounded-lg">
+                <CheckCircle size={16} className="text-[#22c55e]" />
+              </div>
+            </div>
             <div className="border-b border-gray-200 mt-2"></div>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="text-2xl font-bold text-red-600">{stats.delayed}</div>
-            <div className="text-xs text-gray-500">Delayed</div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="text-2xl font-bold text-red-600">{stats.delayed}</div>
+                <div className="text-xs text-gray-500">Delayed</div>
+              </div>
+              <div className="p-2 bg-red-50 rounded-lg">
+                <AlertCircle size={16} className="text-red-600" />
+              </div>
+            </div>
             <div className="border-b border-gray-200 mt-2"></div>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="text-xl font-bold text-[#0f172a]">{stats.totalBudget}</div>
-            <div className="text-xs text-gray-500">Total Budget</div>
+          <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all cursor-default">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="text-xl font-bold text-[#0f172a]">{stats.totalBudget}</div>
+                <div className="text-xs text-gray-500">Total Budget</div>
+              </div>
+              <div className="p-2 bg-[#0f172a]/10 rounded-lg">
+                <DollarSign size={16} className="text-[#0f172a]" />
+              </div>
+            </div>
             <div className="border-b border-gray-200 mt-2"></div>
           </div>
         </div>
@@ -470,9 +563,7 @@ export default function ProjectsPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
             <div className="relative">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search projects..."
@@ -488,24 +579,28 @@ export default function ProjectsPage() {
                 onClick={() => setIsCountyDropdownOpen(!isCountyDropdownOpen)}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e] bg-white text-left flex justify-between items-center"
               >
-                <span className={selectedCounty === 'all' ? 'text-gray-500' : 'text-[#0f172a] font-medium'}>
-                  {selectedCounty === 'all' ? 'All 47 Counties' : selectedCounty}
+                <span className="flex items-center gap-2">
+                  <MapPin size={14} className="text-gray-400" />
+                  <span className={selectedCounty === 'all' ? 'text-gray-500' : 'text-[#0f172a] font-medium'}>
+                    {selectedCounty === 'all' ? 'All 47 Counties' : selectedCounty}
+                  </span>
                 </span>
-                <svg className={`w-4 h-4 text-gray-400 transition-transform ${isCountyDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
+                <ChevronDown size={16} className={`text-gray-400 transition-transform ${isCountyDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               
               {isCountyDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
                   <div className="sticky top-0 bg-white p-2 border-b border-gray-100">
-                    <input
-                      type="text"
-                      placeholder="Search county..."
-                      value={countySearch}
-                      onChange={(e) => setCountySearch(e.target.value)}
-                      className="w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e]"
-                    />
+                    <div className="relative">
+                      <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="text"
+                        placeholder="Search county..."
+                        value={countySearch}
+                        onChange={(e) => setCountySearch(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e]"
+                      />
+                    </div>
                   </div>
                   <button
                     onClick={() => {
@@ -513,9 +608,9 @@ export default function ProjectsPage() {
                       setIsCountyDropdownOpen(false)
                       setCountySearch('')
                     }}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${selectedCounty === 'all' ? 'bg-[#22c55e]/10 text-[#22c55e] font-semibold' : 'text-gray-700'}`}
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors flex items-center gap-2 ${selectedCounty === 'all' ? 'bg-[#22c55e]/10 text-[#22c55e] font-semibold' : 'text-gray-700'}`}
                   >
-                    All 47 Counties
+                    <MapPin size={14} className="text-[#22c55e]" /> All 47 Counties
                   </button>
                   {filteredCounties.map(county => (
                     <button
@@ -525,9 +620,9 @@ export default function ProjectsPage() {
                         setIsCountyDropdownOpen(false)
                         setCountySearch('')
                       }}
-                      className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors ${selectedCounty === county ? 'bg-[#22c55e]/10 text-[#22c55e] font-semibold' : 'text-gray-700'}`}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors flex items-center gap-2 ${selectedCounty === county ? 'bg-[#22c55e]/10 text-[#22c55e] font-semibold' : 'text-gray-700'}`}
                     >
-                      {county}
+                      <MapPin size={12} className="text-gray-400" /> {county}
                     </button>
                   ))}
                   {filteredCounties.length === 0 && (
@@ -547,7 +642,7 @@ export default function ProjectsPage() {
             >
               {sectors.map(sector => (
                 <option key={sector} value={sector === 'All Sectors' ? 'all' : sector}>
-                  {sector}
+                  {sector === 'All Sectors' ? 'All Sectors' : sector}
                 </option>
               ))}
             </select>
@@ -572,26 +667,26 @@ export default function ProjectsPage() {
               <span className="text-xs text-gray-500">Active filters:</span>
               {selectedCounty !== 'all' && (
                 <span className="text-xs bg-[#22c55e]/10 text-[#22c55e] px-2 py-0.5 rounded-full flex items-center gap-1 border border-[#22c55e]/20">
-                  County: {selectedCounty}
-                  <button onClick={() => setSelectedCounty('all')} className="hover:text-[#0f172a]">×</button>
+                  <MapPin size={10} /> {selectedCounty}
+                  <button onClick={() => setSelectedCounty('all')} className="hover:text-[#0f172a]"><X size={12} /></button>
                 </span>
               )}
               {selectedSector !== 'all' && (
                 <span className="text-xs bg-[#22c55e]/10 text-[#22c55e] px-2 py-0.5 rounded-full flex items-center gap-1 border border-[#22c55e]/20">
-                  Sector: {selectedSector}
-                  <button onClick={() => setSelectedSector('all')} className="hover:text-[#0f172a]">×</button>
+                  {getSectorIcon(selectedSector)} {selectedSector}
+                  <button onClick={() => setSelectedSector('all')} className="hover:text-[#0f172a]"><X size={12} /></button>
                 </span>
               )}
               {selectedStatus !== 'all' && (
                 <span className="text-xs bg-[#22c55e]/10 text-[#22c55e] px-2 py-0.5 rounded-full flex items-center gap-1 border border-[#22c55e]/20">
-                  Status: {selectedStatus}
-                  <button onClick={() => setSelectedStatus('all')} className="hover:text-[#0f172a]">×</button>
+                  <Activity size={10} /> {selectedStatus}
+                  <button onClick={() => setSelectedStatus('all')} className="hover:text-[#0f172a]"><X size={12} /></button>
                 </span>
               )}
               {searchQuery && (
                 <span className="text-xs bg-[#22c55e]/10 text-[#22c55e] px-2 py-0.5 rounded-full flex items-center gap-1 border border-[#22c55e]/20">
-                  Search: {searchQuery}
-                  <button onClick={() => setSearchQuery('')} className="hover:text-[#0f172a]">×</button>
+                  <Search size={10} /> {searchQuery}
+                  <button onClick={() => setSearchQuery('')} className="hover:text-[#0f172a]"><X size={12} /></button>
                 </span>
               )}
               <button 
@@ -613,7 +708,8 @@ export default function ProjectsPage() {
       {/* Projects Display */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-16">
         <div className="flex justify-between items-center mb-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 flex items-center gap-1">
+            <BarChart3 size={14} className="text-[#22c55e]" />
             Showing <span className="font-semibold text-[#22c55e]">{filteredProjects.length}</span> projects 
             {selectedCounty === 'all' ? ' across all 47 counties' : ` in ${selectedCounty} County`}
           </p>
@@ -621,9 +717,7 @@ export default function ProjectsPage() {
 
         {filteredProjects.length === 0 ? (
           <div className="text-center py-12">
-            <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <AlertCircle size={48} className="text-gray-300 mx-auto mb-4" />
             <p className="text-gray-500">No projects found matching your filters.</p>
             <button 
               onClick={() => {
@@ -654,9 +748,9 @@ export default function ProjectsPage() {
                     </span>
                   </div>
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xs text-gray-500">{project.county} County</span>
+                    <span className="text-xs text-gray-500 flex items-center gap-1"><MapPin size={10} /> {project.county} County</span>
                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                    <span className="text-xs text-gray-500">{project.sector}</span>
+                    <span className="text-xs text-gray-500 flex items-center gap-1">{getSectorIcon(project.sector)} {project.sector}</span>
                   </div>
                   <p className="text-xs text-gray-600 line-clamp-2 mb-3">{project.description}</p>
                   
@@ -672,27 +766,27 @@ export default function ProjectsPage() {
                   
                   <div className="flex justify-between items-center pt-2 border-t border-gray-100">
                     <div>
-                      <p className="text-[10px] text-gray-400">Budget</p>
+                      <p className="text-[10px] text-gray-400 flex items-center gap-1"><DollarSign size={10} /> Budget</p>
                       <p className="text-xs font-bold text-[#0f172a]">{project.budget}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-[10px] text-gray-400">Timeline</p>
+                      <p className="text-[10px] text-gray-400 flex items-center gap-1 justify-end"><Clock size={10} /> Timeline</p>
                       <button 
                         onClick={(e) => {
                           e.stopPropagation()
                           setSelectedTimelineProject(project)
                           setIsTimelineOpen(true)
                         }}
-                        className="text-xs font-medium text-[#22c55e] hover:text-[#16a34a]"
+                        className="text-xs font-medium text-[#22c55e] hover:text-[#16a34a] flex items-center gap-1"
                       >
-                        View Timeline →
+                        View <ArrowRight size={12} />
                       </button>
                     </div>
                   </div>
                 </div>
                 <div className="border-t border-gray-100 px-5 py-3 bg-gray-50 flex justify-between items-center">
-                  <span className="text-xs text-gray-500">Beneficiaries: {project.beneficiaries.toLocaleString()}+</span>
-                  <span className="text-xs text-gray-400">{project.startDate} - {project.endDate}</span>
+                  <span className="text-xs text-gray-500 flex items-center gap-1"><Users size={10} /> {project.beneficiaries.toLocaleString()}+</span>
+                  <span className="text-xs text-gray-400 flex items-center gap-1"><Calendar size={10} /> {project.startDate} - {project.endDate}</span>
                 </div>
               </div>
             ))}
@@ -715,9 +809,9 @@ export default function ProjectsPage() {
                       </span>
                     </div>
                     <div className="flex flex-wrap gap-3 text-xs text-gray-500 mb-2">
-                      <span>{project.county} County</span>
-                      <span>{project.sector}</span>
-                      <span>Budget: {project.budget}</span>
+                      <span className="flex items-center gap-1"><MapPin size={10} /> {project.county} County</span>
+                      <span className="flex items-center gap-1">{getSectorIcon(project.sector)} {project.sector}</span>
+                      <span className="flex items-center gap-1"><DollarSign size={10} /> {project.budget}</span>
                     </div>
                     <div className="w-full md:w-64">
                       <div className="flex justify-between text-xs mb-1">
@@ -730,16 +824,16 @@ export default function ProjectsPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">Timeline</p>
+                    <p className="text-xs text-gray-500 flex items-center gap-1 justify-end"><Clock size={10} /> Timeline</p>
                     <button 
                       onClick={(e) => {
                         e.stopPropagation()
                         setSelectedTimelineProject(project)
                         setIsTimelineOpen(true)
                       }}
-                      className="text-sm font-semibold text-[#22c55e] hover:text-[#16a34a]"
+                      className="text-sm font-semibold text-[#22c55e] hover:text-[#16a34a] flex items-center gap-1"
                     >
-                      View Timeline →
+                      View <ArrowRight size={14} />
                     </button>
                   </div>
                 </div>
@@ -763,9 +857,7 @@ export default function ProjectsPage() {
                 onClick={() => setIsModalOpen(false)}
                 className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100"
               >
-                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X size={20} className="text-gray-600" />
               </button>
             </div>
             
@@ -774,9 +866,9 @@ export default function ProjectsPage() {
                 <div>
                   <h2 className="text-2xl font-bold text-[#0f172a]">{selectedProject.title}</h2>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-sm text-gray-500">{selectedProject.county} County</span>
+                    <span className="text-sm text-gray-500 flex items-center gap-1"><MapPin size={14} /> {selectedProject.county} County</span>
                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                    <span className="text-sm text-gray-500">{selectedProject.sector}</span>
+                    <span className="text-sm text-gray-500 flex items-center gap-1">{getSectorIcon(selectedProject.sector)} {selectedProject.sector}</span>
                   </div>
                 </div>
                 <span className={`text-sm px-3 py-1 rounded-full ${getStatusBadge(selectedProject.status)}`}>
@@ -788,30 +880,30 @@ export default function ProjectsPage() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-xs text-gray-500 mb-1">Contractor</p>
+                  <p className="text-xs text-gray-500 mb-1 flex items-center gap-1"><Building2 size={12} /> Contractor</p>
                   <p className="font-semibold text-[#0f172a]">{selectedProject.contractor}</p>
                 </div>
                 <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-xs text-gray-500 mb-1">Beneficiaries</p>
+                  <p className="text-xs text-gray-500 mb-1 flex items-center gap-1"><Users size={12} /> Beneficiaries</p>
                   <p className="font-semibold text-[#0f172a]">{selectedProject.beneficiaries.toLocaleString()}+ residents</p>
                 </div>
               </div>
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div>
-                  <p className="text-xs text-gray-500">Budget</p>
+                  <p className="text-xs text-gray-500 flex items-center gap-1"><DollarSign size={12} /> Budget</p>
                   <p className="font-bold text-[#0f172a]">{selectedProject.budget}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Utilized</p>
+                  <p className="text-xs text-gray-500 flex items-center gap-1"><Target size={12} /> Utilized</p>
                   <p className="font-bold text-[#0f172a]">{selectedProject.utilized}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Start Date</p>
+                  <p className="text-xs text-gray-500 flex items-center gap-1"><Calendar size={12} /> Start Date</p>
                   <p className="font-semibold text-[#0f172a]">{selectedProject.startDate}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">End Date</p>
+                  <p className="text-xs text-gray-500 flex items-center gap-1"><Clock size={12} /> End Date</p>
                   <p className="font-semibold text-[#0f172a]">{selectedProject.endDate}</p>
                 </div>
               </div>
@@ -833,18 +925,18 @@ export default function ProjectsPage() {
                     setSelectedTimelineProject(selectedProject)
                     setIsTimelineOpen(true)
                   }}
-                  className="flex-1 bg-[#22c55e] text-white py-2.5 rounded-lg font-semibold hover:bg-[#16a34a] transition-colors"
+                  className="flex-1 bg-[#22c55e] text-white py-2.5 rounded-lg font-semibold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2"
                 >
-                  View Full Timeline
+                  <Clock size={16} /> View Full Timeline
                 </button>
                 <button 
                   onClick={() => {
                     setIsModalOpen(false)
                     setIsReportModalOpen(true)
                   }}
-                  className="flex-1 border border-red-500 text-red-600 py-2.5 rounded-lg font-semibold hover:bg-red-50 transition-colors"
+                  className="flex-1 border border-red-500 text-red-600 py-2.5 rounded-lg font-semibold hover:bg-red-50 transition-colors flex items-center justify-center gap-2"
                 >
-                  Report Issue
+                  <Flag size={16} /> Report Issue
                 </button>
               </div>
             </div>
@@ -858,13 +950,11 @@ export default function ProjectsPage() {
           <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-5 flex justify-between items-center">
               <div>
-                <h2 className="text-xl font-bold text-[#0f172a]">Project Timeline</h2>
+                <h2 className="text-xl font-bold text-[#0f172a] flex items-center gap-2"><Clock size={20} className="text-[#22c55e]" /> Project Timeline</h2>
                 <p className="text-sm text-gray-500">{selectedTimelineProject.title} - {selectedTimelineProject.county} County</p>
               </div>
               <button onClick={() => setIsTimelineOpen(false)} className="text-gray-400 hover:text-gray-600">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X size={24} />
               </button>
             </div>
             <div className="p-6">
@@ -900,11 +990,11 @@ export default function ProjectsPage() {
               <div className="mt-6 pt-4 border-t border-gray-100">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-gray-500">Start Date</p>
+                    <p className="text-xs text-gray-500 flex items-center justify-center gap-1"><Calendar size={12} /> Start Date</p>
                     <p className="font-semibold text-[#0f172a]">{selectedTimelineProject.startDate}</p>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-gray-500">End Date</p>
+                    <p className="text-xs text-gray-500 flex items-center justify-center gap-1"><Calendar size={12} /> End Date</p>
                     <p className="font-semibold text-[#0f172a]">{selectedTimelineProject.endDate}</p>
                   </div>
                 </div>
@@ -920,13 +1010,11 @@ export default function ProjectsPage() {
           <div className="bg-white rounded-2xl w-full max-w-lg">
             <div className="border-b border-gray-200 p-5 flex justify-between items-center">
               <div>
-                <h2 className="text-xl font-bold text-[#0f172a]">Report Project Issue</h2>
+                <h2 className="text-xl font-bold text-[#0f172a] flex items-center gap-2"><Flag size={20} className="text-red-500" /> Report Project Issue</h2>
                 <p className="text-sm text-gray-500">{selectedProject.title} - {selectedProject.county} County</p>
               </div>
               <button onClick={() => setIsReportModalOpen(false)} className="text-gray-400 hover:text-gray-600">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X size={24} />
               </button>
             </div>
             
@@ -962,9 +1050,12 @@ export default function ProjectsPage() {
                 ></textarea>
               </div>
               
-              <div className="bg-amber-50 rounded-lg p-3 text-sm text-amber-700">
-                <p className="font-semibold">⚠️ Anonymous Report</p>
-                <p className="text-xs mt-1">Your identity will be protected. This report will be sent to the relevant oversight committee for investigation.</p>
+              <div className="bg-amber-50 rounded-lg p-3 text-sm text-amber-700 flex items-start gap-2">
+                <AlertTriangle size={16} className="mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold">Anonymous Report</p>
+                  <p className="text-xs mt-1">Your identity will be protected. This report will be sent to the relevant oversight committee for investigation.</p>
+                </div>
               </div>
               
               <div className="flex gap-3 pt-2">
@@ -977,9 +1068,9 @@ export default function ProjectsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+                  className="flex-1 bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
                 >
-                  Submit Report
+                  <Flag size={16} /> Submit Report
                 </button>
               </div>
             </form>

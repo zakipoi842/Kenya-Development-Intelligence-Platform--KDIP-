@@ -10,6 +10,17 @@ import {
   AlertCircle,
   Headphones,
   Handshake,
+  Building,
+  Globe,
+  Users,
+  Target,
+  Home,
+  Monitor,
+  ArrowRight,
+  ExternalLink,
+  Award,
+  Shield,
+  ThumbsUp,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -63,6 +74,7 @@ export default function ContactPage() {
       details: "KDIP Headquarters",
       sub: "Upper Hill, Nairobi, Kenya",
       action: "https://maps.google.com/?q=Upper+Hill,Nairobi,Kenya",
+      actionText: "Get Directions",
     },
     {
       icon: Phone,
@@ -70,6 +82,7 @@ export default function ContactPage() {
       details: "+254 20 123 4567",
       sub: "Mon-Fri, 8am-5pm",
       action: "tel:+254201234567",
+      actionText: "Call Now",
     },
     {
       icon: Mail,
@@ -77,6 +90,7 @@ export default function ContactPage() {
       details: "info@kdip.go.ke",
       sub: "Response within 24-48 hours",
       action: "mailto:info@kdip.go.ke",
+      actionText: "Send Email",
     },
     {
       icon: Clock,
@@ -84,6 +98,7 @@ export default function ContactPage() {
       details: "Monday - Friday: 8am - 5pm",
       sub: "Saturday: 9am - 1pm | Sunday: Closed",
       action: null,
+      actionText: null,
     },
   ];
 
@@ -107,12 +122,20 @@ export default function ContactPage() {
   ];
 
   const partners = [
-    { name: "Ministry of Devolution", logo: "🏛️", role: "Strategic Partner" },
-    { name: "World Bank Kenya", logo: "🌍", role: "Technical Partner" },
-    { name: "UNDP Kenya", logo: "🤝", role: "Development Partner" },
-    { name: "Kenya Vision 2030", logo: "🎯", role: "Implementation Partner" },
-    { name: "County Governments", logo: "🏘️", role: "Implementation Partner" },
-    { name: "ICT Authority", logo: "💻", role: "Technical Partner" },
+    { name: "Ministry of Devolution", icon: Building, role: "Strategic Partner", color: "from-blue-500 to-blue-600" },
+    { name: "World Bank Kenya", icon: Globe, role: "Technical Partner", color: "from-green-500 to-green-600" },
+    { name: "UNDP Kenya", icon: Handshake, role: "Development Partner", color: "from-indigo-500 to-indigo-600" },
+    { name: "Kenya Vision 2030", icon: Target, role: "Implementation Partner", color: "from-purple-500 to-purple-600" },
+    { name: "County Governments", icon: Home, role: "Implementation Partner", color: "from-orange-500 to-orange-600" },
+    { name: "ICT Authority", icon: Monitor, role: "Technical Partner", color: "from-cyan-500 to-cyan-600" },
+  ];
+
+  // Quick stats
+  const stats = [
+    { value: "24/7", label: "Support Available", icon: Headphones },
+    { value: "98%", label: "Response Rate", icon: ThumbsUp },
+    { value: "48hrs", label: "Average Response Time", icon: Clock },
+    { value: "100+", label: "Projects Supported", icon: Award },
   ];
 
   return (
@@ -133,6 +156,24 @@ export default function ContactPage() {
           </p>
         </div>
 
+        {/* Quick Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {stats.map((stat, idx) => {
+            const Icon = stat.icon;
+            return (
+              <div key={idx} className="bg-white rounded-xl border border-gray-200 p-4 text-center hover:border-[#22c55e]/30 transition-all hover:shadow-md">
+                <div className="flex justify-center mb-2">
+                  <div className="p-2 bg-[#22c55e]/10 rounded-lg">
+                    <Icon size={20} className="text-[#22c55e]" />
+                  </div>
+                </div>
+                <div className="text-xl font-black text-[#0f172a]">{stat.value}</div>
+                <div className="text-xs text-gray-500">{stat.label}</div>
+              </div>
+            );
+          })}
+        </div>
+
         {/* Contact Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {contactInfo.map((info, idx) => {
@@ -140,10 +181,10 @@ export default function ContactPage() {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition group hover:border-[#22c55e]/30"
+                className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-all group hover:border-[#22c55e]/30"
               >
                 <div className="flex flex-col items-center text-center">
-                  <div className="p-3 bg-[#22c55e]/10 rounded-xl mb-4 group-hover:bg-[#22c55e]/20 transition border border-[#22c55e]/20">
+                  <div className="p-3 bg-[#22c55e]/10 rounded-xl mb-4 group-hover:bg-[#22c55e]/20 transition-all group-hover:scale-110 border border-[#22c55e]/20">
                     <Icon size={24} className="text-[#22c55e]" />
                   </div>
                   <h3 className="font-bold text-[#0f172a] mb-2">{info.title}</h3>
@@ -154,9 +195,10 @@ export default function ContactPage() {
                       href={info.action}
                       target={info.action.startsWith("http") ? "_blank" : "_self"}
                       rel="noopener noreferrer"
-                      className="mt-3 text-sm font-semibold text-[#22c55e] hover:text-[#16a34a] transition"
+                      className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#22c55e] hover:text-[#16a34a] transition group"
                     >
-                      {info.title === "Call Us" ? "Call Now" : info.title === "Email Us" ? "Send Email" : "Get Directions"} →
+                      {info.actionText}
+                      <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </a>
                   )}
                 </div>
@@ -169,7 +211,7 @@ export default function ContactPage() {
         <div className="grid lg:grid-cols-2 gap-10">
           
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
             <div className="bg-[#0f172a] px-6 py-4">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 <Send size={20} />
@@ -194,6 +236,7 @@ export default function ContactPage() {
                     onClick={() => setIsSubmitted(false)}
                     className="inline-flex items-center gap-2 rounded-xl bg-[#22c55e] px-6 py-2 text-white font-semibold hover:bg-[#16a34a] transition"
                   >
+                    <Send size={16} />
                     Send Another Message
                   </button>
                 </div>
@@ -291,7 +334,7 @@ export default function ContactPage() {
           {/* Right Side - FAQs & Support */}
           <div className="space-y-6">
             {/* FAQs */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
               <div className="bg-[#0f172a] px-6 py-4">
                 <h2 className="text-xl font-bold text-white flex items-center gap-2">
                   <MessageCircle size={20} />
@@ -304,15 +347,21 @@ export default function ContactPage() {
               <div className="p-6 space-y-4">
                 {faqs.map((faq, idx) => (
                   <div key={idx} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
-                    <h3 className="font-semibold text-[#0f172a] mb-2">{faq.question}</h3>
-                    <p className="text-sm text-gray-600">{faq.answer}</p>
+                    <h3 className="font-semibold text-[#0f172a] mb-2 flex items-start gap-2">
+                      <span className="text-[#22c55e] font-bold">Q:</span>
+                      {faq.question}
+                    </h3>
+                    <p className="text-sm text-gray-600 flex items-start gap-2">
+                      <span className="text-[#22c55e] font-bold">A:</span>
+                      {faq.answer}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Support Banner */}
-            <div className="bg-[#22c55e]/10 rounded-2xl border border-[#22c55e]/20 overflow-hidden">
+            <div className="bg-gradient-to-br from-[#22c55e]/10 to-[#22c55e]/5 rounded-2xl border border-[#22c55e]/20 overflow-hidden">
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-white rounded-lg shadow-sm border border-gray-100">
@@ -326,17 +375,19 @@ export default function ContactPage() {
                 <div className="flex flex-col gap-3">
                   <a
                     href="tel:+254722123456"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#22c55e] px-4 py-2 text-white font-semibold hover:bg-[#16a34a] transition"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#22c55e] px-4 py-2.5 text-white font-semibold hover:bg-[#16a34a] transition group"
                   >
                     <Phone size={16} />
                     Emergency Hotline
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </a>
                   <Link
                     to="/participate"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-[#22c55e]/20 px-4 py-2 text-[#22c55e] font-semibold hover:bg-[#22c55e]/5 transition"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-[#22c55e]/20 px-4 py-2.5 text-[#22c55e] font-semibold hover:bg-[#22c55e]/5 transition group"
                   >
                     <MessageCircle size={16} />
                     Report an Issue
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
@@ -345,14 +396,17 @@ export default function ContactPage() {
         </div>
 
         {/* Map Section */}
-        <div className="mt-12 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="mt-12 bg-white rounded-2xl border border-gray-200 overflow-hidden">
           <div className="bg-[#0f172a] px-6 py-4">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
               <MapPin size={20} />
               Find Us Here
             </h2>
+            <p className="text-slate-300 text-sm mt-1">
+              Visit our headquarters in Upper Hill, Nairobi
+            </p>
           </div>
-          <div className="p-1">
+          <div className="p-2">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.123456789!2d36.8167!3d-1.2833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1172d84d49a7%3A0xf7cf3d2d9f30b8e4!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1700000000000!5m2!1sen!2ske"
               width="100%"
@@ -368,7 +422,7 @@ export default function ContactPage() {
         </div>
 
         {/* Our Partners & Collaborators */}
-        <div className="mt-12 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="mt-12 bg-white rounded-2xl border border-gray-200 overflow-hidden">
           <div className="bg-[#0f172a] px-6 py-4">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
               <Handshake size={20} />
@@ -380,20 +434,35 @@ export default function ContactPage() {
           </div>
           <div className="p-6">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {partners.map((partner, idx) => (
-                <div key={idx} className="text-center group">
-                  <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-3 group-hover:bg-[#22c55e]/10 transition border border-gray-100 group-hover:border-[#22c55e]/20">
-                    {partner.logo}
+              {partners.map((partner, idx) => {
+                const Icon = partner.icon;
+                return (
+                  <div key={idx} className="text-center group">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${partner.color} rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-sm`}>
+                      <Icon size={28} className="text-white" />
+                    </div>
+                    <h3 className="font-semibold text-[#0f172a] text-sm group-hover:text-[#22c55e] transition-colors">
+                      {partner.name}
+                    </h3>
+                    <p className="text-xs text-gray-400 mt-1">{partner.role}</p>
                   </div>
-                  <h3 className="font-semibold text-[#0f172a] text-sm">{partner.name}</h3>
-                  <p className="text-xs text-gray-400 mt-1">{partner.role}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="mt-6 pt-4 border-t border-gray-100 text-center">
-              <p className="text-xs text-gray-500">
-                Interested in partnering with KDIP? Contact our partnerships team at <a href="mailto:partnerships@kdip.go.ke" className="text-[#22c55e] font-medium hover:text-[#16a34a]">partnerships@kdip.go.ke</a>
-              </p>
+              <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+                <Shield size={14} className="text-[#22c55e]" />
+                <span>
+                  Interested in partnering with KDIP? Contact our partnerships team at{" "}
+                  <a 
+                    href="mailto:partnerships@kdip.go.ke" 
+                    className="text-[#22c55e] font-medium hover:text-[#16a34a] transition inline-flex items-center gap-1"
+                  >
+                    partnerships@kdip.go.ke
+                    <ExternalLink size={12} />
+                  </a>
+                </span>
+              </div>
             </div>
           </div>
         </div>

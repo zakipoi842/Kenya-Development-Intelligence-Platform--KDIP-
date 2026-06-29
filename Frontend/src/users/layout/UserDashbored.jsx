@@ -12,9 +12,15 @@ import {
   Menu,
   ChevronDown,
   UserCircle,
+  DollarSign,
+  Users2,
 } from "lucide-react";
+import api from "../../services/api";
 
-export default function UserDashboard() {
+// ===== IMPORT OVERVIEW PAGE =====
+import OverviewPage from "../pages/overview";
+
+export default function UserDashbored() {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
@@ -24,19 +30,30 @@ export default function UserDashboard() {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  
+  const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    const userData = localStorage.getItem("user");
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    const fetchData = async () => {
+      try {
+        const userData = localStorage.getItem("user");
+        const isAuthenticated = localStorage.getItem("isAuthenticated");
+        const token = localStorage.getItem("token");
+        
+        if (!userData || !isAuthenticated || !token) {
+          navigate("/login");
+          return;
+        }
+        
+        setUser(JSON.parse(userData));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error:", error);
+        navigate("/login");
+      }
+    };
     
-    if (!userData || !isAuthenticated) {
-      navigate("/login");
-      return;
-    }
-    
-    setUser(JSON.parse(userData));
+    fetchData();
   }, [navigate]);
 
   useEffect(() => {
@@ -56,6 +73,7 @@ export default function UserDashboard() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -63,47 +81,131 @@ export default function UserDashboard() {
 
   const navItems = [
     { id: "overview", label: "Overview", icon: LayoutDashboard },
-    { id: "projects", label: "My Projects", icon: Target },
+    { id: "projects", label: "Projects", icon: Target },
     { id: "reports", label: "Reports", icon: FileText },
-    { id: "budget", label: "Budget", icon: LayoutDashboard },
-    { id: "community", label: "Community", icon: User },
+    { id: "budget", label: "Budget", icon: DollarSign },
+    { id: "community", label: "Community", icon: Users2 },
     { id: "profile", label: "Profile", icon: UserCircle },
   ];
 
-  if (!user) {
+  if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-blue-50">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-[#1B4D3E] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
         </div>
       </div>
     );
   }
 
-  // Empty page - completely blank
-  const renderPageContent = () => {
-    return <div></div>;
+  const getInitials = () => {
+    const first = user?.firstName?.[0] || "";
+    const last = user?.lastName?.[0] || "";
+    return (first + last).toUpperCase() || "U";
+  };
+
+  // ===== RENDER CONTENT BASED ON ACTIVE TAB =====
+  const renderContent = () => {
+    switch(activeTab) {
+      case "overview":
+        return <OverviewPage />; // <-- Your full Overview page
+      case "projects":
+        return (
+          <div className="min-h-[60vh] flex items-center justify-center">
+            <div className="text-center">
+              <Target className="w-16 h-16 text-[#22c55e] mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-[#0f172a]">Projects</h2>
+              <p className="text-gray-500">View and manage all development projects</p>
+              <button 
+                onClick={() => navigate("/projects")}
+                className="mt-4 px-6 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#16a34a] transition-colors"
+              >
+                Go to Projects
+              </button>
+            </div>
+          </div>
+        );
+      case "reports":
+        return (
+          <div className="min-h-[60vh] flex items-center justify-center">
+            <div className="text-center">
+              <FileText className="w-16 h-16 text-[#22c55e] mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-[#0f172a]">Reports</h2>
+              <p className="text-gray-500">View community impact and development reports</p>
+              <button 
+                onClick={() => navigate("/impact")}
+                className="mt-4 px-6 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#16a34a] transition-colors"
+              >
+                Go to Impact
+              </button>
+            </div>
+          </div>
+        );
+      case "budget":
+        return (
+          <div className="min-h-[60vh] flex items-center justify-center">
+            <div className="text-center">
+              <DollarSign className="w-16 h-16 text-[#22c55e] mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-[#0f172a]">Budget</h2>
+              <p className="text-gray-500">Track budget utilization across all sectors</p>
+              <button 
+                onClick={() => navigate("/budget")}
+                className="mt-4 px-6 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#16a34a] transition-colors"
+              >
+                Go to Budget
+              </button>
+            </div>
+          </div>
+        );
+      case "community":
+        return (
+          <div className="min-h-[60vh] flex items-center justify-center">
+            <div className="text-center">
+              <Users2 className="w-16 h-16 text-[#22c55e] mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-[#0f172a]">Community</h2>
+              <p className="text-gray-500">Connect with the community and participate</p>
+              <button 
+                onClick={() => navigate("/participate")}
+                className="mt-4 px-6 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#16a34a] transition-colors"
+              >
+                Go to Participate
+              </button>
+            </div>
+          </div>
+        );
+      case "profile":
+        return (
+          <div className="min-h-[60vh] flex items-center justify-center">
+            <div className="text-center">
+              <UserCircle className="w-16 h-16 text-[#22c55e] mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-[#0f172a]">Profile</h2>
+              <p className="text-gray-500">Manage your account settings and preferences</p>
+            </div>
+          </div>
+        );
+      default:
+        return <OverviewPage />;
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col">
       
-      {/* Top Navigation Bar */}
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 z-50">
+      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
         <div className="flex items-center justify-between px-4 h-16">
           
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 rounded-xl hover:bg-gray-100 transition-colors lg:hidden"
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors lg:hidden"
             >
               <Menu className="w-5 h-5 text-gray-600" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/25">
+              <div className="w-8 h-8 bg-[#1B4D3E] rounded-lg flex items-center justify-center">
                 <LayoutDashboard className="w-4 h-4 text-white" />
               </div>
-              <span className="font-bold text-lg text-gray-900 hidden sm:block">KDIP</span>
+              <span className="font-bold text-lg text-[#0f172a] hidden sm:block">KDIP</span>
               <span className="text-xs text-gray-400 hidden sm:block">| User Portal</span>
             </div>
           </div>
@@ -115,7 +217,7 @@ export default function UserDashboard() {
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-sm bg-gray-100/80 border-0 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all placeholder-gray-400"
+                className="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#1B4D3E] focus:ring-1 focus:ring-[#1B4D3E] transition-all placeholder-gray-400"
               />
               <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             </div>
@@ -124,7 +226,7 @@ export default function UserDashboard() {
           <div className="flex items-center gap-2">
             <button 
               onClick={() => setShowMobileSearch(!showMobileSearch)}
-              className="p-2 rounded-xl hover:bg-gray-100 transition-colors md:hidden"
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors md:hidden"
             >
               <Search className="w-5 h-5 text-gray-600" />
             </button>
@@ -132,19 +234,22 @@ export default function UserDashboard() {
             <div className="relative">
               <button 
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="p-2 rounded-xl hover:bg-gray-100 transition-colors relative"
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
               >
                 <Bell className="w-5 h-5 text-gray-600" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {unreadCount}
+                  </span>
+                )}
               </button>
               
               {showNotifications && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)}></div>
-                  <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100/50 z-50 max-h-[calc(100vh-100px)] overflow-hidden">
-                    <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-emerald-50/50 to-transparent">
-                      <div>
-                        <span className="font-semibold text-gray-900">Notifications</span>
-                      </div>
+                  <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-lg border border-gray-200 z-50 max-h-[calc(100vh-100px)] overflow-hidden">
+                    <div className="p-4 border-b border-gray-100 flex justify-between items-center">
+                      <span className="font-semibold text-[#0f172a]">Notifications</span>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       <div className="p-8 text-center">
@@ -162,15 +267,13 @@ export default function UserDashboard() {
             <div className="relative">
               <button 
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center gap-2 p-1.5 pr-3 rounded-xl hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
+                className="flex items-center gap-2 p-1.5 pr-3 rounded-lg hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
               >
-                <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/25">
-                  <span className="text-white text-sm font-bold">
-                    {user.firstName?.[0]}{user.lastName?.[0] || "U"}
-                  </span>
+                <div className="w-8 h-8 bg-[#1B4D3E] rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">{getInitials()}</span>
                 </div>
-                <span className="hidden sm:block text-sm font-medium text-gray-700">
-                  {user.firstName || "User"}
+                <span className="hidden sm:block text-sm font-medium text-[#0f172a]">
+                  {user?.firstName || "User"}
                 </span>
                 <ChevronDown className="w-4 h-4 text-gray-400 hidden sm:block" />
               </button>
@@ -178,17 +281,20 @@ export default function UserDashboard() {
               {showUserMenu && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)}></div>
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100/50 z-50 overflow-hidden">
-                    <div className="p-4 border-b border-gray-100 bg-gradient-to-r from-emerald-50/50 to-transparent">
-                      <p className="text-sm font-semibold text-gray-900">{user.firstName} {user.lastName}</p>
-                      <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg border border-gray-200 z-50 overflow-hidden">
+                    <div className="p-4 border-b border-gray-100">
+                      <p className="text-sm font-semibold text-[#0f172a]">{user?.firstName} {user?.lastName}</p>
+                      <p className="text-xs text-gray-500 truncate">{user?.email}</p>
                     </div>
                     <div className="p-2">
-                      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-xl transition-colors">
+                      <button 
+                        onClick={() => { setActiveTab("profile"); setShowUserMenu(false); }}
+                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                      >
                         <UserCircle className="w-4 h-4 text-gray-400" />
-                        My Profile
+                        Profile
                       </button>
-                      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-xl transition-colors">
+                      <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
                         <Settings className="w-4 h-4 text-gray-400" />
                         Settings
                       </button>
@@ -196,7 +302,7 @@ export default function UserDashboard() {
                     <div className="p-2 border-t border-gray-100">
                       <button 
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
                         Logout
@@ -217,7 +323,7 @@ export default function UserDashboard() {
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-sm bg-gray-100/80 border-0 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all"
+                className="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#1B4D3E] focus:ring-1 focus:ring-[#1B4D3E] transition-all"
                 autoFocus
               />
               <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -226,26 +332,23 @@ export default function UserDashboard() {
         )}
       </header>
 
-      {/* Sidebar */}
       <aside 
-        className={`fixed top-16 left-0 h-[calc(100vh-4rem)] bg-white/80 backdrop-blur-lg border-r border-gray-200/50 transition-all duration-300 z-40 ${
+        className={`fixed top-16 left-0 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 transition-all duration-300 z-40 ${
           isSidebarOpen ? "w-64" : "w-0 lg:w-20 overflow-hidden"
         }`}
       >
         <div className={`h-full flex flex-col p-4 ${!isSidebarOpen && "lg:px-2"}`}>
           
-          <div className={`flex items-center gap-3 mb-6 p-3 bg-gradient-to-r from-emerald-50/50 to-blue-50/50 rounded-2xl border border-emerald-100/50 ${
+          <div className={`flex items-center gap-3 mb-6 p-3 bg-[#f8fafc] rounded-lg border border-gray-200 ${
             !isSidebarOpen && "lg:justify-center lg:p-2"
           }`}>
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/25 shrink-0">
-              <span className="text-white text-sm font-bold">
-                {user.firstName?.[0]}{user.lastName?.[0] || "U"}
-              </span>
+            <div className="w-10 h-10 bg-[#1B4D3E] rounded-lg flex items-center justify-center shrink-0">
+              <span className="text-white text-sm font-bold">{getInitials()}</span>
             </div>
             {isSidebarOpen && (
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-gray-900 truncate">{user.firstName} {user.lastName}</p>
-                <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                <p className="text-sm font-semibold text-[#0f172a] truncate">{user?.firstName} {user?.lastName}</p>
+                <p className="text-xs text-gray-500 truncate">{user?.email}</p>
               </div>
             )}
           </div>
@@ -258,24 +361,24 @@ export default function UserDashboard() {
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
                     isActive 
-                      ? "bg-gradient-to-r from-emerald-500/10 to-emerald-600/5 text-emerald-700 shadow-sm" 
-                      : "text-gray-600 hover:bg-gray-100/80 hover:text-gray-900"
+                      ? "bg-[#1B4D3E]/10 text-[#1B4D3E] border border-[#1B4D3E]/20" 
+                      : "text-gray-600 hover:bg-gray-50 hover:text-[#0f172a]"
                   }`}
                 >
                   <Icon className={`w-5 h-5 shrink-0 transition-colors ${
-                    isActive ? "text-emerald-600" : "text-gray-400 group-hover:text-gray-600"
+                    isActive ? "text-[#1B4D3E]" : "text-gray-400 group-hover:text-gray-600"
                   }`} />
                   {isSidebarOpen && (
                     <span className={`text-sm font-medium transition-colors ${
-                      isActive ? "text-emerald-700" : "text-gray-600 group-hover:text-gray-800"
+                      isActive ? "text-[#1B4D3E]" : "text-gray-600 group-hover:text-[#0f172a]"
                     }`}>
                       {item.label}
                     </span>
                   )}
                   {isActive && isSidebarOpen && (
-                    <span className="ml-auto w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+                    <span className="ml-auto w-1.5 h-6 bg-[#1B4D3E] rounded-full"></span>
                   )}
                 </button>
               );
@@ -284,7 +387,7 @@ export default function UserDashboard() {
 
           <button 
             onClick={handleLogout}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-600 hover:bg-red-50/80 transition-colors mt-4 border-t border-gray-200/50 pt-4 group ${
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 transition-colors mt-4 border-t border-gray-200 pt-4 group ${
               !isSidebarOpen && "lg:justify-center"
             }`}
           >
@@ -294,29 +397,27 @@ export default function UserDashboard() {
         </div>
       </aside>
 
-      {/* Main Content - Completely Empty */}
       <main className={`flex-1 transition-all duration-300 mt-16 ${isSidebarOpen ? "lg:ml-64" : "lg:ml-20"}`}>
         <div className="p-4 sm:p-6 lg:p-8">
-          {renderPageContent()}
+          {renderContent()}
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className={`bg-white/80 backdrop-blur-lg border-t border-gray-200/50 transition-all duration-300 ${isSidebarOpen ? "lg:ml-64" : "lg:ml-20"}`}>
+      <footer className={`bg-white border-t border-gray-200 transition-all duration-300 ${isSidebarOpen ? "lg:ml-64" : "lg:ml-20"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-6">
-              <span className="text-sm font-semibold text-gray-900">KDIP</span>
+              <span className="text-sm font-semibold text-[#0f172a]">KDIP</span>
               <span className="text-xs text-gray-400">© 2024 Kenya Development Intelligence Platform</span>
             </div>
             <div className="flex items-center gap-6">
-              <a href="#" className="text-xs text-gray-500 hover:text-emerald-600 transition-colors">Privacy Policy</a>
-              <a href="#" className="text-xs text-gray-500 hover:text-emerald-600 transition-colors">Terms of Service</a>
-              <a href="#" className="text-xs text-gray-500 hover:text-emerald-600 transition-colors">Help Center</a>
+              <a href="#" className="text-xs text-gray-500 hover:text-[#1B4D3E] transition-colors">Privacy Policy</a>
+              <a href="#" className="text-xs text-gray-500 hover:text-[#1B4D3E] transition-colors">Terms of Service</a>
+              <a href="#" className="text-xs text-gray-500 hover:text-[#1B4D3E] transition-colors">Help Center</a>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-400">Status:</span>
-                <span className="flex items-center gap-1.5 text-xs text-emerald-600">
-                  <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                <span className="flex items-center gap-1.5 text-xs text-[#1B4D3E]">
+                  <span className="w-2 h-2 bg-[#1B4D3E] rounded-full animate-pulse"></span>
                   Operational
                 </span>
               </div>

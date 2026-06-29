@@ -28,17 +28,17 @@ export default function Home() {
   }
 
   const summaryStats = [
-    { id: 'projects', label: 'Total Projects', value: '12,540', link: '/projects', icon: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f4ca.png' },
-    { id: 'budget', label: 'Total Budget', value: 'KES 2.31T', link: '/budget', icon: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f4b0.png' },
-    { id: 'completed', label: 'Completed', value: '8,320', link: '/projects', icon: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/2705.png' },
-    { id: 'delayed', label: 'Delayed', value: '1,120', link: '/projects', icon: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/26a0.png' }
+    { id: 'projects', label: 'Total Projects', value: '12,540', link: '/projects', icon: '📊' },
+    { id: 'budget', label: 'Total Budget', value: 'KES 2.31T', link: '/budget', icon: '💰' },
+    { id: 'completed', label: 'Completed', value: '8,320', link: '/projects', icon: '✅' },
+    { id: 'delayed', label: 'Delayed', value: '1,120', link: '/projects', icon: '⚠️' }
   ]
 
   const featureCards = [
-    { title: 'Track Development', desc: 'Monitor projects in real time across 47 counties', link: '/projects', icon: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f4cd.png' },
-    { title: 'Budget Transparency', desc: 'Track budgets and utilization for every project', link: '/budget', icon: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f4b0.png' },
-    { title: 'Citizen Participation', desc: 'Report issues and track project progress', link: '/participate', icon: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f5e3.png', action: handleViewFeedback },
-    { title: 'Development Intelligence', desc: 'Measure outcomes and compare counties', link: '/impact', icon: 'https://cdn.jsdelivr.net/npm/emoji-datasource-apple/img/apple/64/1f4c8.png' }
+    { title: 'Track Development', desc: 'Monitor projects in real time across 47 counties', link: '/projects', icon: '📍' },
+    { title: 'Budget Transparency', desc: 'Track budgets and utilization for every project', link: '/budget', icon: '💰' },
+    { title: 'Citizen Participation', desc: 'Report issues and track project progress', link: '/participate', icon: '🗣️', action: handleViewFeedback },
+    { title: 'Development Intelligence', desc: 'Measure outcomes and compare counties', link: '/impact', icon: '📈' }
   ]
 
   const recentProjects = [
@@ -83,6 +83,148 @@ export default function Home() {
     { name: 'Mary Atieno', region: 'Kisumu', role: 'Youth Advocate', message: 'Finally, a platform that gives citizens a voice in development.', rating: 5, avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=60&q=80' }
   ]
 
+  // Icon components
+  const IconProjects = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+    </svg>
+  )
+
+  const IconBudget = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  )
+
+  const IconCompleted = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  )
+
+  const IconDelayed = () => (
+    <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+  )
+
+  const IconTrack = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  )
+
+  const IconParticipate = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+    </svg>
+  )
+
+  const IconIntelligence = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    </svg>
+  )
+
+  const IconWater = () => (
+    <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 9l7-4 7 4M5 9v10a2 2 0 002 2h10a2 2 0 002-2V9M5 9l7-4 7 4" />
+    </svg>
+  )
+
+  const IconSchool = () => (
+    <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M12 14l9-5-9-5-9 5 9 5z" />
+      <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+    </svg>
+  )
+
+  const IconHealthcare = () => (
+    <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+  )
+
+  const IconEmployment = () => (
+    <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+  )
+
+  const IconReport = () => (
+    <svg className="w-8 h-8 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+  )
+
+  const IconFeedback = () => (
+    <svg className="w-8 h-8 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+    </svg>
+  )
+
+  const IconBudgetSuggestion = () => (
+    <svg className="w-8 h-8 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  )
+
+  const IconVolunteer = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
+  )
+
+  const IconEvents = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  )
+
+  const IconLeaders = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    </svg>
+  )
+
+  const IconResources = () => (
+    <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+    </svg>
+  )
+
+  const getIndicatorIcon = (label) => {
+    switch(label) {
+      case 'Water Access': return <IconWater />
+      case 'School Enrollment': return <IconSchool />
+      case 'Healthcare Coverage': return <IconHealthcare />
+      case 'Employment Rate': return <IconEmployment />
+      default: return null
+    }
+  }
+
+  const getStatIcon = (id) => {
+    switch(id) {
+      case 'projects': return <IconProjects />
+      case 'budget': return <IconBudget />
+      case 'completed': return <IconCompleted />
+      case 'delayed': return <IconDelayed />
+      default: return null
+    }
+  }
+
+  const getFeatureIcon = (title) => {
+    switch(title) {
+      case 'Track Development': return <IconTrack />
+      case 'Budget Transparency': return <IconBudget />
+      case 'Citizen Participation': return <IconParticipate />
+      case 'Development Intelligence': return <IconIntelligence />
+      default: return null
+    }
+  }
+
   return (
     <div className="bg-[#f8fafc] text-[#0f172a] antialiased min-h-screen">
       
@@ -101,17 +243,17 @@ export default function Home() {
               KDIP tracks development projects, budgets and impact across all counties. Real data. Real impact.
             </p>
             <div className="flex items-center gap-3 pt-2">
-              <button onClick={() => navigate('/projects')} className="inline-flex items-center gap-2 bg-[#22c55e] hover:bg-[#16a34a] text-white px-5 py-2.5 rounded-lg text-xs font-bold transition-colors shadow-sm">
+              <button onClick={() => navigate('/projects')} className="inline-flex items-center gap-2 bg-[#22c55e] hover:bg-[#16a34a] text-white px-5 py-2.5 rounded-lg text-xs font-bold transition-colors">
                 Explore Projects
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </button>
-              <button onClick={() => navigate('/dashboard')} className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-[#0f172a] px-5 py-2.5 rounded-lg text-xs font-bold transition-colors border border-gray-200 shadow-sm">
+              <button onClick={() => navigate('/dashboard')} className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-[#0f172a] px-5 py-2.5 rounded-lg text-xs font-bold transition-colors border border-gray-200">
                 View Dashboard
               </button>
             </div>
           </div>
 
-          <div className="lg:col-span-7 bg-[#0f172a]/95 border border-slate-800/90 rounded-xl p-6 shadow-2xl">
+          <div className="lg:col-span-7 bg-[#0f172a]/95 border border-slate-800/90 rounded-xl p-6">
             <h2 className="text-slate-400 text-xs font-bold tracking-wider uppercase mb-4">
               Kenya <span className="underline decoration-[#22c55e] underline-offset-[5px] pb-1 font-bold text-slate-200">at a</span> Glance
             </h2>
@@ -123,7 +265,7 @@ export default function Home() {
                   onClick={() => navigate(stat.link)}
                   className="bg-[#1e293b]/70 hover:bg-[#1e293b] border border-slate-800/60 rounded-xl p-4 transition-all cursor-pointer group"
                 >
-                  <img src={stat.icon} alt={stat.label} className="w-6 h-6 mb-2" />
+                  <div className="w-6 h-6 mb-2">{getStatIcon(stat.id)}</div>
                   <div className="text-xl font-black text-white tracking-tight">{stat.value}</div>
                   <div className="text-[11px] font-bold text-slate-400 mt-0.5">{stat.label}</div>
                 </div>
@@ -153,10 +295,10 @@ export default function Home() {
             <div 
               key={i} 
               onClick={() => feat.action ? feat.action() : navigate(feat.link)}
-              className="bg-white border border-gray-100 shadow-md rounded-xl p-5 flex items-start gap-4 hover:shadow-lg transition-all duration-200 cursor-pointer group"
+              className="bg-white border border-gray-100 rounded-xl p-5 flex items-start gap-4 hover:shadow-lg transition-all duration-200 cursor-pointer group"
             >
               <div className={`p-3 rounded-xl shrink-0 bg-[#22c55e]/10 text-[#22c55e] flex items-center justify-center group-hover:scale-105 transition-transform`}>
-                <img src={feat.icon} alt={feat.title} className="w-6 h-6" />
+                {getFeatureIcon(feat.title)}
               </div>
               <div className="space-y-1 flex-1">
                 <h3 className="text-sm font-bold text-[#0f172a] tracking-wide">{feat.title}</h3>
@@ -175,7 +317,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
           {/* ===== UPDATED: Projects by County - Removed navigation, View All, and border ===== */}
-          <div className="lg:col-span-4 bg-white rounded-xl p-5 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+          <div className="lg:col-span-4 bg-white rounded-xl p-5 flex flex-col justify-between hover:shadow-md transition-all">
             <div className="mb-4">
               <h3 className="text-xs font-bold text-[#0f172a] uppercase tracking-wider">Projects by County</h3>
             </div>
@@ -205,7 +347,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:col-span-4 bg-white border border-gray-200 rounded-xl p-5 shadow-xs">
+          <div className="lg:col-span-4 bg-white border border-gray-200 rounded-xl p-5">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xs font-bold text-[#0f172a] uppercase tracking-wider">Recent Projects</h3>
               <button onClick={handleViewAllProjects} className="text-xs font-bold text-[#22c55e] hover:text-[#16a34a] transition-colors flex items-center gap-1">
@@ -237,7 +379,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:col-span-4 bg-white border border-gray-200 rounded-xl p-5 shadow-xs">
+          <div className="lg:col-span-4 bg-white border border-gray-200 rounded-xl p-5">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xs font-bold text-[#0f172a] uppercase tracking-wider">Development Indicators</h3>
               <button onClick={handleViewAllReports} className="text-xs font-bold text-[#22c55e] hover:text-[#16a34a] transition-colors flex items-center gap-1">
@@ -253,7 +395,7 @@ export default function Home() {
                 >
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-1.5 text-gray-500">
-                      <span className="text-lg">{ind.label === 'Water Access' ? '💧' : ind.label === 'School Enrollment' ? '📚' : ind.label === 'Healthcare Coverage' ? '🏥' : '💼'}</span>
+                      {getIndicatorIcon(ind.label)}
                       <span className="text-[11px] font-bold truncate block">{ind.label}</span>
                     </div>
                     <span className="text-2xl font-black text-[#0f172a] block tracking-tight">{ind.score}</span>
@@ -315,7 +457,7 @@ export default function Home() {
             <p className="text-gray-500 text-sm mt-1">Development index score based on project completion and budget utilization</p>
           </div>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-[#0f172a] border-b border-slate-800">
@@ -351,7 +493,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {milestones.map((milestone, idx) => (
-            <div key={idx} className="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1">
+            <div key={idx} className="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1">
               <div className="flex justify-between items-start mb-4">
                 <h3 className="font-bold text-[#0f172a] text-base leading-tight">{milestone.project}</h3>
                 <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
@@ -404,7 +546,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {testimonials.map((testimonial, idx) => (
-            <div key={idx} className="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer" onClick={handleViewFeedback}>
+            <div key={idx} className="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer" onClick={handleViewFeedback}>
               <div className="flex items-center gap-3 mb-4">
                 <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-[#22c55e]/20" />
                 <div>
@@ -426,7 +568,7 @@ export default function Home() {
           ))}
         </div>
         <div className="text-center mt-10">
-          <button onClick={handleShareFeedback} className="inline-flex items-center gap-2 bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-md hover:shadow-lg">
+          <button onClick={handleShareFeedback} className="inline-flex items-center gap-2 bg-[#0f172a] hover:bg-[#1e293b] text-white px-6 py-3 rounded-xl text-sm font-bold transition-all hover:shadow-lg">
             Share Your Feedback
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
           </button>
@@ -435,7 +577,7 @@ export default function Home() {
 
       {/* ===== SECTION 8: IMPACT MEASUREMENT ===== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="p-8 lg:p-10">
               <span className="text-[#22c55e] text-xs font-bold uppercase tracking-wider bg-[#22c55e]/10 px-3 py-1 rounded-full border border-[#22c55e]/20 inline-block">Impact Measurement</span>
@@ -476,9 +618,7 @@ export default function Home() {
           <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-[#22c55e]/10 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
+                <IconBudget />
               </div>
               <span className="text-xs font-bold text-[#22c55e] bg-[#22c55e]/10 px-2 py-1 rounded-full border border-[#22c55e]/20">National</span>
             </div>
@@ -494,9 +634,7 @@ export default function Home() {
           <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-[#22c55e]/10 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+                <IconIntelligence />
               </div>
               <span className="text-xs font-bold text-[#22c55e] bg-[#22c55e]/10 px-2 py-1 rounded-full border border-[#22c55e]/20">By Sector</span>
             </div>
@@ -512,9 +650,7 @@ export default function Home() {
           <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-[#22c55e]/10 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 21h18M5 4h14M5 4v14a2 2 0 002 2h10a2 2 0 002-2V4M5 4l2-2m10 0l2 2m-7 5h.01" />
-                </svg>
+                <IconTrack />
               </div>
               <span className="text-xs font-bold text-[#22c55e] bg-[#22c55e]/10 px-2 py-1 rounded-full border border-[#22c55e]/20">County</span>
             </div>
@@ -531,7 +667,7 @@ export default function Home() {
 
       {/* ===== SECTION 10: YOUR VOICE MATTERS - Citizen Participation Hub ===== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mb-12">
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 p-8">
           <div className="text-center mb-8">
             <span className="text-[#22c55e] text-xs font-bold uppercase tracking-wider bg-[#22c55e]/10 px-3 py-1 rounded-full border border-[#22c55e]/20">Your Voice Matters</span>
             <h2 className="text-3xl font-bold text-[#0f172a] mt-3">Citizen Participation Hub</h2>
@@ -541,7 +677,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div onClick={handleReportIssue} className="bg-white rounded-xl p-6 text-center hover:shadow-xl transition-all duration-200 cursor-pointer border border-gray-200 hover:border-[#22c55e]/30">
               <div className="w-16 h-16 bg-[#22c55e]/10 rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
-                <span className="text-2xl">📋</span>
+                <IconReport />
               </div>
               <h3 className="font-bold text-[#0f172a] mb-2">Report Project Issue</h3>
               <p className="text-sm text-gray-500 leading-relaxed">Flag concerns about project quality, delays, or mismanagement directly to oversight committees.</p>
@@ -551,7 +687,7 @@ export default function Home() {
 
             <div onClick={handleCommunityFeedback} className="bg-white rounded-xl p-6 text-center hover:shadow-xl transition-all duration-200 cursor-pointer border border-gray-200 hover:border-[#22c55e]/30">
               <div className="w-16 h-16 bg-[#22c55e]/10 rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
-                <span className="text-2xl">💬</span>
+                <IconFeedback />
               </div>
               <h3 className="font-bold text-[#0f172a] mb-2">Community Feedback</h3>
               <p className="text-sm text-gray-500 leading-relaxed">Share your experience with development projects and suggest improvements for your area.</p>
@@ -561,7 +697,7 @@ export default function Home() {
 
             <div onClick={handleBudgetSuggestion} className="bg-white rounded-xl p-6 text-center hover:shadow-xl transition-all duration-200 cursor-pointer border border-gray-200 hover:border-[#22c55e]/30">
               <div className="w-16 h-16 bg-[#22c55e]/10 rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
-                <span className="text-2xl">💰</span>
+                <IconBudgetSuggestion />
               </div>
               <h3 className="font-bold text-[#0f172a] mb-2">Budget Suggestions</h3>
               <p className="text-sm text-gray-500 leading-relaxed">Propose how county budgets should be allocated to address community priorities.</p>
@@ -573,28 +709,28 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-gray-200">
             <div onClick={handleVolunteer} className="text-center cursor-pointer hover:scale-105 transition-transform">
               <div className="w-12 h-12 bg-[#22c55e]/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-xl">🤝</span>
+                <IconVolunteer />
               </div>
               <div className="text-sm font-semibold text-[#0f172a]">Become a Volunteer</div>
               <div className="text-xs text-gray-400">Join our monitoring team</div>
             </div>
             <div onClick={handleViewEvents} className="text-center cursor-pointer hover:scale-105 transition-transform">
               <div className="w-12 h-12 bg-[#22c55e]/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-xl">📅</span>
+                <IconEvents />
               </div>
               <div className="text-sm font-semibold text-[#0f172a]">Upcoming Events</div>
               <div className="text-xs text-gray-400">Join community forums</div>
             </div>
             <div onClick={handleViewLeaders} className="text-center cursor-pointer hover:scale-105 transition-transform">
               <div className="w-12 h-12 bg-[#22c55e]/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-xl">🏆</span>
+                <IconLeaders />
               </div>
               <div className="text-sm font-semibold text-[#0f172a]">Community Leaders</div>
               <div className="text-xs text-gray-400">Meet our champions</div>
             </div>
             <div onClick={handleViewResources} className="text-center cursor-pointer hover:scale-105 transition-transform">
               <div className="w-12 h-12 bg-[#22c55e]/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-xl">📚</span>
+                <IconResources />
               </div>
               <div className="text-sm font-semibold text-[#0f172a]">Resource Center</div>
               <div className="text-xs text-gray-400">Guides & templates</div>

@@ -1,4 +1,35 @@
 import { useState } from 'react'
+import {
+  Building2,
+  GraduationCap,
+  Heart,
+  Sprout,
+  Droplets,
+  Home,
+  Zap,
+  Car,
+  TrendingUp,
+  Users,
+  Briefcase,
+  Award,
+  MapPin,
+  Calendar,
+  CheckCircle,
+  AlertCircle,
+  ChevronDown,
+  Search,
+  ExternalLink,
+  Target,
+  Globe,
+  Factory,
+  Lightbulb,
+  ArrowRight,
+  Star,
+  BarChart3,
+  PieChart,
+  Activity,
+  Clock
+} from 'lucide-react'
 
 export default function ImpactPage() {
   
@@ -35,6 +66,19 @@ export default function ImpactPage() {
 
   const years = ['2022', '2023', '2024', '2025']
 
+  // ===== SECTOR ICON MAP =====
+  const sectorIcons = {
+    'Infrastructure': Building2,
+    'Education': GraduationCap,
+    'Healthcare': Heart,
+    'Agriculture': Sprout,
+    'Water & Sanitation': Droplets,
+    'Housing': Home,
+    'Energy': Zap,
+    'Transport': Car,
+    'Tourism': Globe
+  }
+
   // ===== NATIONAL IMPACT SUMMARY =====
   const nationalImpact = {
     totalProjects: 12540,
@@ -58,14 +102,14 @@ export default function ImpactPage() {
 
   // ===== SECTOR IMPACT METRICS =====
   const sectorImpact = [
-    { name: 'Infrastructure', icon: '🏗️', projectsCompleted: 1245, beneficiaries: '2.8M', jobsCreated: 89000, satisfaction: 78 },
-    { name: 'Education', icon: '📚', projectsCompleted: 892, beneficiaries: '1.6M', jobsCreated: 34000, satisfaction: 91 },
-    { name: 'Healthcare', icon: '🏥', projectsCompleted: 734, beneficiaries: '2.1M', jobsCreated: 56000, satisfaction: 84 },
-    { name: 'Agriculture', icon: '🌾', projectsCompleted: 567, beneficiaries: '1.2M', jobsCreated: 28000, satisfaction: 76 },
-    { name: 'Water & Sanitation', icon: '💧', projectsCompleted: 456, beneficiaries: '1.4M', jobsCreated: 15000, satisfaction: 82 },
-    { name: 'Housing', icon: '🏠', projectsCompleted: 234, beneficiaries: '0.6M', jobsCreated: 12000, satisfaction: 73 },
-    { name: 'Energy', icon: '⚡', projectsCompleted: 189, beneficiaries: '0.8M', jobsCreated: 10000, satisfaction: 79 },
-    { name: 'Transport', icon: '🚗', projectsCompleted: 345, beneficiaries: '1.5M', jobsCreated: 21000, satisfaction: 75 }
+    { name: 'Infrastructure', icon: Building2, projectsCompleted: 1245, beneficiaries: '2.8M', jobsCreated: 89000, satisfaction: 78 },
+    { name: 'Education', icon: GraduationCap, projectsCompleted: 892, beneficiaries: '1.6M', jobsCreated: 34000, satisfaction: 91 },
+    { name: 'Healthcare', icon: Heart, projectsCompleted: 734, beneficiaries: '2.1M', jobsCreated: 56000, satisfaction: 84 },
+    { name: 'Agriculture', icon: Sprout, projectsCompleted: 567, beneficiaries: '1.2M', jobsCreated: 28000, satisfaction: 76 },
+    { name: 'Water & Sanitation', icon: Droplets, projectsCompleted: 456, beneficiaries: '1.4M', jobsCreated: 15000, satisfaction: 82 },
+    { name: 'Housing', icon: Home, projectsCompleted: 234, beneficiaries: '0.6M', jobsCreated: 12000, satisfaction: 73 },
+    { name: 'Energy', icon: Zap, projectsCompleted: 189, beneficiaries: '0.8M', jobsCreated: 10000, satisfaction: 79 },
+    { name: 'Transport', icon: Car, projectsCompleted: 345, beneficiaries: '1.5M', jobsCreated: 21000, satisfaction: 75 }
   ]
 
   // ===== ALL 47 COUNTIES IMPACT RANKINGS - COMPLETE =====
@@ -162,6 +206,12 @@ export default function ImpactPage() {
     return 'bg-red-500'
   }
 
+  // Get sector icon component
+  const getSectorIcon = (sectorName) => {
+    const Icon = sectorIcons[sectorName]
+    return Icon ? <Icon size={20} className="text-[#22c55e]" /> : <Building2 size={20} className="text-[#22c55e]" />
+  }
+
   return (
     <div className="bg-[#f8fafc] min-h-screen pt-20">
       
@@ -170,22 +220,31 @@ export default function ImpactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a]">Community Impact Dashboard</h1>
-              <p className="text-gray-500 text-sm mt-1">
+              <div className="flex items-center gap-3 mb-1">
+                <div className="p-2 bg-[#22c55e]/10 rounded-lg border border-[#22c55e]/20">
+                  <Activity size={24} className="text-[#22c55e]" />
+                </div>
+                <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a]">Community Impact Dashboard</h1>
+              </div>
+              <p className="text-gray-500 text-sm mt-1 flex items-center gap-1">
+                <TrendingUp size={14} className="text-[#22c55e]" />
                 Measuring real community outcomes across all 47 counties | 
                 <span className="font-bold text-[#22c55e] ml-1">Transforming Lives Since 2022</span>
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <select
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e] bg-white"
-              >
-                {years.map(year => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
+              <div className="flex items-center gap-2">
+                <Calendar size={16} className="text-gray-400" />
+                <select
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(e.target.value)}
+                  className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e] bg-white"
+                >
+                  {years.map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -193,12 +252,42 @@ export default function ImpactPage() {
 
       {/* View Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="flex gap-1 border-b border-gray-200">
-          <button onClick={() => setSelectedView('overview')} className={`px-5 py-2.5 text-sm font-medium transition-all ${selectedView === 'overview' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}>Overview</button>
-          <button onClick={() => setSelectedView('sectors')} className={`px-5 py-2.5 text-sm font-medium transition-all ${selectedView === 'sectors' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}>By Sector</button>
-          <button onClick={() => setSelectedView('counties')} className={`px-5 py-2.5 text-sm font-medium transition-all ${selectedView === 'counties' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}>County Rankings</button>
-          <button onClick={() => setSelectedView('stories')} className={`px-5 py-2.5 text-sm font-medium transition-all ${selectedView === 'stories' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}>Impact Stories</button>
-          <button onClick={() => setSelectedView('sdg')} className={`px-5 py-2.5 text-sm font-medium transition-all ${selectedView === 'sdg' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}>SDG Progress</button>
+        <div className="flex gap-1 border-b border-gray-200 overflow-x-auto">
+          <button 
+            onClick={() => setSelectedView('overview')} 
+            className={`px-5 py-2.5 text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${selectedView === 'overview' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}
+          >
+            <BarChart3 size={16} />
+            Overview
+          </button>
+          <button 
+            onClick={() => setSelectedView('sectors')} 
+            className={`px-5 py-2.5 text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${selectedView === 'sectors' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}
+          >
+            <PieChart size={16} />
+            By Sector
+          </button>
+          <button 
+            onClick={() => setSelectedView('counties')} 
+            className={`px-5 py-2.5 text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${selectedView === 'counties' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}
+          >
+            <MapPin size={16} />
+            County Rankings
+          </button>
+          <button 
+            onClick={() => setSelectedView('stories')} 
+            className={`px-5 py-2.5 text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${selectedView === 'stories' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}
+          >
+            <Star size={16} />
+            Impact Stories
+          </button>
+          <button 
+            onClick={() => setSelectedView('sdg')} 
+            className={`px-5 py-2.5 text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${selectedView === 'sdg' ? 'text-[#22c55e] border-b-2 border-[#22c55e]' : 'text-gray-500 hover:text-[#0f172a]'}`}
+          >
+            <Target size={16} />
+            SDG Progress
+          </button>
         </div>
       </div>
 
@@ -208,26 +297,54 @@ export default function ImpactPage() {
           {/* National Impact Cards */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white rounded-xl p-4 border border-gray-200">
-                <div className="text-2xl font-bold text-[#22c55e]">{nationalImpact.totalProjects.toLocaleString()}</div>
-                <div className="text-xs text-gray-500">Total Projects</div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all hover:shadow-md">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-2xl font-bold text-[#22c55e]">{nationalImpact.totalProjects.toLocaleString()}</div>
+                    <div className="text-xs text-gray-500">Total Projects</div>
+                  </div>
+                  <div className="p-2 bg-[#22c55e]/10 rounded-lg">
+                    <Building2 size={16} className="text-[#22c55e]" />
+                  </div>
+                </div>
                 <div className="border-b border-gray-200 mt-2"></div>
               </div>
-              <div className="bg-white rounded-xl p-4 border border-gray-200">
-                <div className="text-2xl font-bold text-[#22c55e]">{nationalImpact.completedProjects.toLocaleString()}</div>
-                <div className="text-xs text-gray-500">Projects Completed</div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all hover:shadow-md">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-2xl font-bold text-[#22c55e]">{nationalImpact.completedProjects.toLocaleString()}</div>
+                    <div className="text-xs text-gray-500">Projects Completed</div>
+                  </div>
+                  <div className="p-2 bg-[#22c55e]/10 rounded-lg">
+                    <CheckCircle size={16} className="text-[#22c55e]" />
+                  </div>
+                </div>
                 <div className="mt-2 h-1.5 bg-gray-100 rounded-full">
                   <div className="h-1.5 bg-[#22c55e] rounded-full" style={{ width: `${(nationalImpact.completedProjects / nationalImpact.totalProjects) * 100}%` }}></div>
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-4 border border-gray-200">
-                <div className="text-2xl font-bold text-[#22c55e]">{nationalImpact.totalBeneficiaries}</div>
-                <div className="text-xs text-gray-500">Total Beneficiaries</div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all hover:shadow-md">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-2xl font-bold text-[#22c55e]">{nationalImpact.totalBeneficiaries}</div>
+                    <div className="text-xs text-gray-500">Total Beneficiaries</div>
+                  </div>
+                  <div className="p-2 bg-[#22c55e]/10 rounded-lg">
+                    <Users size={16} className="text-[#22c55e]" />
+                  </div>
+                </div>
                 <div className="border-b border-gray-200 mt-2"></div>
               </div>
-              <div className="bg-white rounded-xl p-4 border border-gray-200">
-                <div className="text-2xl font-bold text-[#22c55e]">{nationalImpact.totalJobsCreated}</div>
-                <div className="text-xs text-gray-500">Jobs Created</div>
+              <div className="bg-white rounded-xl p-4 border border-gray-200 hover:border-[#22c55e]/30 transition-all hover:shadow-md">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-2xl font-bold text-[#22c55e]">{nationalImpact.totalJobsCreated}</div>
+                    <div className="text-xs text-gray-500">Jobs Created</div>
+                  </div>
+                  <div className="p-2 bg-[#22c55e]/10 rounded-lg">
+                    <Briefcase size={16} className="text-[#22c55e]" />
+                  </div>
+                </div>
                 <div className="border-b border-gray-200 mt-2"></div>
               </div>
             </div>
@@ -235,8 +352,11 @@ export default function ImpactPage() {
 
           {/* Impact Timeline */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h2 className="text-lg font-bold text-[#0f172a] mb-4">Impact Growth Over Time</h2>
+            <div className="bg-white rounded-xl border border-gray-200 p-6 hover:border-[#22c55e]/30 transition-all">
+              <h2 className="text-lg font-bold text-[#0f172a] mb-4 flex items-center gap-2">
+                <TrendingUp size={20} className="text-[#22c55e]" />
+                Impact Growth Over Time
+              </h2>
               <div className="space-y-4">
                 {impactTimeline.map((item, idx) => (
                   <div key={idx} className="cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors" onClick={() => setSelectedYear(item.year.toString())}>
@@ -245,8 +365,8 @@ export default function ImpactPage() {
                       <span className="text-sm font-bold text-[#22c55e]">{item.projectsCompleted} projects</span>
                     </div>
                     <div className="flex justify-between text-xs text-gray-500 mb-1">
-                      <span>Beneficiaries: {item.beneficiaries}</span>
-                      <span>Jobs: {item.jobsCreated.toLocaleString()}</span>
+                      <span className="flex items-center gap-1"><Users size={12} /> Beneficiaries: {item.beneficiaries}</span>
+                      <span className="flex items-center gap-1"><Briefcase size={12} /> Jobs: {item.jobsCreated.toLocaleString()}</span>
                     </div>
                     <div className="h-2 bg-gray-100 rounded-full">
                       <div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${item.avgProgress}%` }}></div>
@@ -261,8 +381,13 @@ export default function ImpactPage() {
           {/* Top Counties by Impact */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-bold text-[#0f172a]">Top Performing Counties</h2>
-              <button onClick={() => setSelectedView('counties')} className="text-sm text-[#22c55e] hover:text-[#16a34a]">View All →</button>
+              <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2">
+                <Award size={20} className="text-[#22c55e]" />
+                Top Performing Counties
+              </h2>
+              <button onClick={() => setSelectedView('counties')} className="text-sm text-[#22c55e] hover:text-[#16a34a] flex items-center gap-1">
+                View All <ArrowRight size={14} />
+              </button>
             </div>
             <div className="grid grid-cols-1 gap-4">
               {countyImpact.slice(0, 5).map((county) => (
@@ -275,9 +400,9 @@ export default function ImpactPage() {
                     <span className={`text-sm font-bold ${getImpactColor(county.impactScore)}`}>Score: {county.impactScore}</span>
                   </div>
                   <div className="flex justify-between text-xs text-gray-500 mb-2">
-                    <span>{county.projectsCompleted} projects</span>
-                    <span>{county.beneficiaries} beneficiaries</span>
-                    <span>{county.trend} trend</span>
+                    <span className="flex items-center gap-1"><Building2 size={12} /> {county.projectsCompleted} projects</span>
+                    <span className="flex items-center gap-1"><Users size={12} /> {county.beneficiaries} beneficiaries</span>
+                    <span className="flex items-center gap-1"><TrendingUp size={12} /> {county.trend} trend</span>
                   </div>
                   <div className="h-1.5 bg-gray-100 rounded-full">
                     <div className={`h-1.5 ${getProgressBarColor(county.impactScore)} rounded-full`} style={{ width: `${county.impactScore}%` }}></div>
@@ -294,21 +419,50 @@ export default function ImpactPage() {
       {selectedView === 'sectors' && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {sectorImpact.map((sector, idx) => (
-              <div key={idx} onClick={() => { setSelectedImpactItem(sector); setIsModalOpen(true); }} className="bg-white rounded-xl p-5 border border-gray-200 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 hover:border-[#22c55e]/30">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#22c55e]/10 flex items-center justify-center text-2xl">{sector.icon}</div>
-                  <div><h3 className="font-bold text-[#0f172a] text-lg">{sector.name}</h3><p className="text-xs text-gray-500">{sector.projectsCompleted} projects completed</p></div>
+            {sectorImpact.map((sector, idx) => {
+              const Icon = sector.icon
+              return (
+                <div key={idx} onClick={() => { setSelectedImpactItem(sector); setIsModalOpen(true); }} className="bg-white rounded-xl p-5 border border-gray-200 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 hover:border-[#22c55e]/30">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-[#22c55e]/10 flex items-center justify-center">
+                      <Icon size={24} className="text-[#22c55e]" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-[#0f172a] text-lg">{sector.name}</h3>
+                      <p className="text-xs text-gray-500">{sector.projectsCompleted} projects completed</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 mb-4 text-center">
+                    <div>
+                      <p className="text-[10px] text-gray-400">Beneficiaries</p>
+                      <p className="text-sm font-bold text-[#0f172a]">{sector.beneficiaries}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400">Jobs Created</p>
+                      <p className="text-sm font-bold text-[#22c55e]">{sector.jobsCreated.toLocaleString()}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400">Satisfaction</p>
+                      <p className="text-sm font-bold text-[#22c55e]">{sector.satisfaction}%</p>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-gray-500">Satisfaction Rate</span>
+                      <span className="font-semibold text-[#22c55e]">{sector.satisfaction}%</span>
+                    </div>
+                    <div className="h-2 bg-gray-100 rounded-full">
+                      <div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${sector.satisfaction}%` }}></div>
+                    </div>
+                  </div>
+                  <div className="border-t border-gray-100 mt-3 pt-2">
+                    <p className="text-xs text-gray-400 flex items-center gap-1">
+                      <Activity size={12} /> Click for detailed impact
+                    </p>
+                  </div>
                 </div>
-                <div className="grid grid-cols-3 gap-2 mb-4 text-center">
-                  <div><p className="text-[10px] text-gray-400">Beneficiaries</p><p className="text-sm font-bold text-[#0f172a]">{sector.beneficiaries}</p></div>
-                  <div><p className="text-[10px] text-gray-400">Jobs Created</p><p className="text-sm font-bold text-[#22c55e]">{sector.jobsCreated.toLocaleString()}</p></div>
-                  <div><p className="text-[10px] text-gray-400">Satisfaction</p><p className="text-sm font-bold text-[#22c55e]">{sector.satisfaction}%</p></div>
-                </div>
-                <div><div className="flex justify-between text-xs mb-1"><span className="text-gray-500">Satisfaction Rate</span><span className="font-semibold text-[#22c55e]">{sector.satisfaction}%</span></div><div className="h-2 bg-gray-100 rounded-full"><div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${sector.satisfaction}%` }}></div></div></div>
-                <div className="border-t border-gray-100 mt-3 pt-2"><p className="text-xs text-gray-400">Click for detailed impact</p></div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       )}
@@ -320,28 +474,40 @@ export default function ImpactPage() {
           <div className="mb-5">
             <div className="relative w-72">
               <button onClick={() => setIsCountyDropdownOpen(!isCountyDropdownOpen)} className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white text-left flex justify-between items-center focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e]">
-                <span className={selectedCounty === 'all' || selectedCounty === 'All Counties' ? 'text-gray-500' : 'text-[#0f172a]'}>
-                  {selectedCounty === 'all' || selectedCounty === 'All Counties' ? 'All 47 Counties' : selectedCounty}
+                <span className="flex items-center gap-2">
+                  <MapPin size={14} className="text-gray-400" />
+                  <span className={selectedCounty === 'all' || selectedCounty === 'All Counties' ? 'text-gray-500' : 'text-[#0f172a]'}>
+                    {selectedCounty === 'all' || selectedCounty === 'All Counties' ? 'All 47 Counties' : selectedCounty}
+                  </span>
                 </span>
-                <svg className={`w-4 h-4 text-gray-400 transition-transform ${isCountyDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
+                <ChevronDown size={16} className={`text-gray-400 transition-transform ${isCountyDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               {isCountyDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
                   <div className="sticky top-0 bg-white p-2 border-b border-gray-100">
-                    <input type="text" placeholder="Search county..." value={countySearch} onChange={(e) => setCountySearch(e.target.value)} className="w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e]" />
+                    <div className="relative">
+                      <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                      <input type="text" placeholder="Search county..." value={countySearch} onChange={(e) => setCountySearch(e.target.value)} className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e]" />
+                    </div>
                   </div>
-                  <button onClick={() => { setSelectedCounty('all'); setIsCountyDropdownOpen(false); setCountySearch(''); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 font-medium text-[#22c55e]">All 47 Counties</button>
-                  {filteredCounties.map(county => (<button key={county} onClick={() => { setSelectedCounty(county); setIsCountyDropdownOpen(false); setCountySearch(''); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 text-[#0f172a]">{county}</button>))}
+                  <button onClick={() => { setSelectedCounty('all'); setIsCountyDropdownOpen(false); setCountySearch(''); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 font-medium text-[#22c55e] flex items-center gap-2">
+                    <MapPin size={14} /> All 47 Counties
+                  </button>
+                  {filteredCounties.map(county => (
+                    <button key={county} onClick={() => { setSelectedCounty(county); setIsCountyDropdownOpen(false); setCountySearch(''); }} className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 text-[#0f172a] flex items-center gap-2">
+                      <MapPin size={12} className="text-gray-400" /> {county}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
-            <p className="text-xs text-gray-400 mt-2">Showing {selectedCounty === 'all' ? '47 counties' : '1 county'} • Sorted by impact score</p>
+            <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
+              <BarChart3 size={12} /> Showing {selectedCounty === 'all' ? '47 counties' : '1 county'} • Sorted by impact score
+            </p>
           </div>
 
           {/* County Impact Table - ALL 47 COUNTIES */}
-          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-[#22c55e]/30 transition-all">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-[#0f172a] border-b border-slate-800">
@@ -357,14 +523,23 @@ export default function ImpactPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {filteredCountyImpact.map((county) => (
-                    <tr key={county.name} onClick={() => { setSelectedImpactItem(county); setIsModalOpen(true); }} className="hover:bg-gray-50 cursor-pointer">
+                    <tr key={county.name} onClick={() => { setSelectedImpactItem(county); setIsModalOpen(true); }} className="hover:bg-gray-50 cursor-pointer transition-colors">
                       <td className="px-6 py-3"><span className="text-sm font-bold text-[#22c55e]">#{county.rank}</span></td>
-                      <td className="px-6 py-3 font-semibold text-[#0f172a]">{county.name}</td>
-                      <td className="px-6 py-3"><div className="flex items-center gap-2"><span className={`text-sm font-bold ${getImpactColor(county.impactScore)}`}>{county.impactScore}%</span><div className="w-16 bg-gray-100 rounded-full h-1.5"><div className={`h-1.5 ${getProgressBarColor(county.impactScore)} rounded-full`} style={{ width: `${county.impactScore}%` }}></div></div></div></td>
+                      <td className="px-6 py-3 font-semibold text-[#0f172a] flex items-center gap-2">
+                        <MapPin size={12} className="text-gray-400" /> {county.name}
+                      </td>
+                      <td className="px-6 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-sm font-bold ${getImpactColor(county.impactScore)}`}>{county.impactScore}%</span>
+                          <div className="w-16 bg-gray-100 rounded-full h-1.5">
+                            <div className={`h-1.5 ${getProgressBarColor(county.impactScore)} rounded-full`} style={{ width: `${county.impactScore}%` }}></div>
+                          </div>
+                        </div>
+                      </td>
                       <td className="px-6 py-3 text-sm text-gray-600">{county.projectsCompleted}</td>
                       <td className="px-6 py-3 text-sm text-gray-600">{county.beneficiaries}</td>
                       <td className="px-6 py-3 text-sm text-gray-600">{county.jobsCreated.toLocaleString()}</td>
-                      <td className="px-6 py-3"><span className="text-xs font-semibold text-[#22c55e]">{county.trend}</span></td>
+                      <td className="px-6 py-3"><span className="text-xs font-semibold text-[#22c55e] flex items-center gap-1"><TrendingUp size={12} /> {county.trend}</span></td>
                     </tr>
                   ))}
                 </tbody>
@@ -374,27 +549,35 @@ export default function ImpactPage() {
         </div>
       )}
 
-      {/* ===== IMPACT STORIES VIEW - NO LINKS TO PROJECTS ===== */}
+      {/* ===== IMPACT STORIES VIEW ===== */}
       {selectedView === 'stories' && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {impactStories.map((story) => (
               <div key={story.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden cursor-pointer hover:shadow-lg transition-all group hover:border-[#22c55e]/30">
-                <img src={story.image} alt={story.title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="relative">
+                  <img src={story.image} alt={story.title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <div className="absolute top-3 left-3 flex gap-1">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#22c55e]/90 text-white border border-[#22c55e]/20 flex items-center gap-1">
+                      <MapPin size={10} /> {story.county}
+                    </span>
+                  </div>
+                </div>
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20">{story.county}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#0f172a]/10 text-[#0f172a] border border-[#0f172a]/20">{story.sector}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#0f172a]/10 text-[#0f172a] border border-[#0f172a]/20 flex items-center gap-1">
+                      {getSectorIcon(story.sector)} {story.sector}
+                    </span>
                   </div>
                   <h3 className="font-bold text-[#0f172a] text-lg mb-2">{story.title}</h3>
                   <p className="text-sm text-gray-600 mb-3">{story.description}</p>
                   <div className="bg-gray-50 rounded-lg p-3 mb-3">
-                    <p className="text-xs text-gray-500">Key Impact</p>
+                    <p className="text-xs text-gray-500 flex items-center gap-1"><Activity size={12} /> Key Impact</p>
                     <p className="text-xs font-semibold text-[#0f172a]">{story.impact}</p>
                   </div>
                   <div className="flex justify-between items-center pt-2 border-t border-gray-100">
-                    <span className="text-xs text-gray-400">{story.beneficiaries.toLocaleString()}+ beneficiaries</span>
-                    <span className="text-xs text-gray-400">{story.year}</span>
+                    <span className="text-xs text-gray-400 flex items-center gap-1"><Users size={12} /> {story.beneficiaries.toLocaleString()}+ beneficiaries</span>
+                    <span className="text-xs text-gray-400 flex items-center gap-1"><Calendar size={12} /> {story.year}</span>
                   </div>
                 </div>
               </div>
@@ -406,8 +589,11 @@ export default function ImpactPage() {
       {/* ===== SDG PROGRESS VIEW ===== */}
       {selectedView === 'sdg' && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 className="text-lg font-bold text-[#0f172a] mb-4">Sustainable Development Goals Progress</h2>
+          <div className="bg-white rounded-xl border border-gray-200 p-6 hover:border-[#22c55e]/30 transition-all">
+            <h2 className="text-lg font-bold text-[#0f172a] mb-4 flex items-center gap-2">
+              <Target size={20} className="text-[#22c55e]" />
+              Sustainable Development Goals Progress
+            </h2>
             <div className="space-y-4">
               {sdgProgress.map((sdg, idx) => (
                 <div key={idx} className="cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
@@ -416,8 +602,8 @@ export default function ImpactPage() {
                     <span className="text-sm font-bold text-[#22c55e]">{sdg.current}% / {sdg.target}%</span>
                   </div>
                   <div className="flex justify-between text-xs text-gray-500 mb-1">
-                    <span>Progress: {sdg.progress}% to target</span>
-                    <span>Target: {sdg.target}%</span>
+                    <span className="flex items-center gap-1"><TrendingUp size={12} /> Progress: {sdg.progress}% to target</span>
+                    <span className="flex items-center gap-1"><Target size={12} /> Target: {sdg.target}%</span>
                   </div>
                   <div className="h-2 bg-gray-100 rounded-full">
                     <div className="h-2 bg-[#22c55e] rounded-full" style={{ width: `${sdg.progress}%` }}></div>
@@ -435,18 +621,45 @@ export default function ImpactPage() {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6">
           <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-[#0f172a]">{selectedImpactItem.name} {selectedImpactItem.sector ? 'Sector' : 'County'} Impact Details</h2>
+              <h2 className="text-xl font-bold text-[#0f172a] flex items-center gap-2">
+                <BarChart3 size={20} className="text-[#22c55e]" />
+                {selectedImpactItem.name} {selectedImpactItem.sector ? 'Sector' : 'County'} Impact Details
+              </h2>
               <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-gray-600 text-2xl">×</button>
             </div>
             <div className="space-y-3">
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Impact Score</span><span className={`font-bold ${getImpactColor(selectedImpactItem.impactScore || selectedImpactItem.satisfaction)}`}>{selectedImpactItem.impactScore || selectedImpactItem.satisfaction}%</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Projects Completed</span><span className="font-bold text-[#0f172a]">{selectedImpactItem.projectsCompleted || selectedImpactItem.projectsCompleted}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Beneficiaries</span><span className="font-bold text-[#0f172a]">{selectedImpactItem.beneficiaries}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Jobs Created</span><span className="font-bold text-[#22c55e]">{selectedImpactItem.jobsCreated?.toLocaleString()}</span></div>
-              <div className="flex justify-between py-2 border-b border-gray-100"><span className="text-gray-600">Trend</span><span className="font-bold text-[#22c55e]">{selectedImpactItem.trend || '+3%'}</span></div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600 flex items-center gap-1"><Award size={14} /> Impact Score</span>
+                <span className={`font-bold ${getImpactColor(selectedImpactItem.impactScore || selectedImpactItem.satisfaction)}`}>
+                  {selectedImpactItem.impactScore || selectedImpactItem.satisfaction}%
+                </span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600 flex items-center gap-1"><Building2 size={14} /> Projects Completed</span>
+                <span className="font-bold text-[#0f172a]">{selectedImpactItem.projectsCompleted}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600 flex items-center gap-1"><Users size={14} /> Beneficiaries</span>
+                <span className="font-bold text-[#0f172a]">{selectedImpactItem.beneficiaries}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600 flex items-center gap-1"><Briefcase size={14} /> Jobs Created</span>
+                <span className="font-bold text-[#22c55e]">{selectedImpactItem.jobsCreated?.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600 flex items-center gap-1"><TrendingUp size={14} /> Trend</span>
+                <span className="font-bold text-[#22c55e]">{selectedImpactItem.trend || '+3%'}</span>
+              </div>
             </div>
-            <div className="mt-4 pt-2"><div className="h-2 bg-gray-100 rounded-full"><div className={`h-2 ${getProgressBarColor(selectedImpactItem.impactScore || selectedImpactItem.satisfaction)} rounded-full`} style={{ width: `${selectedImpactItem.impactScore || selectedImpactItem.satisfaction}%` }}></div></div></div>
-            <button onClick={() => setIsModalOpen(false)} className="w-full mt-6 bg-[#22c55e] text-white py-2.5 rounded-lg font-semibold hover:bg-[#16a34a] transition-colors">Close</button>
+            <div className="mt-4 pt-2">
+              <div className="h-2 bg-gray-100 rounded-full">
+                <div className={`h-2 ${getProgressBarColor(selectedImpactItem.impactScore || selectedImpactItem.satisfaction)} rounded-full`} 
+                  style={{ width: `${selectedImpactItem.impactScore || selectedImpactItem.satisfaction}%` }} />
+              </div>
+            </div>
+            <button onClick={() => setIsModalOpen(false)} className="w-full mt-6 bg-[#22c55e] text-white py-2.5 rounded-lg font-semibold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2">
+              <CheckCircle size={16} /> Close
+            </button>
           </div>
         </div>
       )}
